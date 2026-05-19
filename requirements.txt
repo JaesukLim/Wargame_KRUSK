@@ -1,0 +1,2 @@
+# One-shot local environment: editable install + GUI/3D + build tooling.
+-e .[gui,three_d,build]

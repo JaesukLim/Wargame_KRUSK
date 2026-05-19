@@ -1,0 +1,39 @@
+Prokhorovka modern terrain grid summary
+================================================
+Output directory: data2\prokhorovka_terrain
+Grid size: 40 rows x 50 columns
+Grid cell: 250 m
+DEM type: SRTMGL1
+
+Elevation [m]
+  min  = 170.941
+  mean = 223.624
+  max  = 256.884
+
+Slope [deg]
+  min  = 0.019
+  mean = 1.483
+  max  = 7.769
+
+Roughness [m]
+  min  = 0.638
+  mean = 5.542
+  max  = 21.443
+
+Local relief [m]
+  min  = 5.560
+  mean = 29.362
+  max  = 65.725
+
+
+Landform cell count:
+  1 plain     : 445
+  2 hill      : 1555
+  3 mountain  : 0
+  4 water     : 0
+
+Feature-mask cell count:
+  water cells        : 0
+  rail cells         : 0
+  road cells         : 0
+  anti-tank ditch    : 0

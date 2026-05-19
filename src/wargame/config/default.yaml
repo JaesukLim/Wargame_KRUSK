@@ -1,0 +1,107 @@
+simulation:
+  random_seed: 19430712
+  ticks_per_second: 30
+  fixed_dt: 0.2
+  duration_seconds: 600
+
+  detection:
+    # Scanned probabilistic detection.
+    # confidence = base * range_factor * terrain_modifier * altitude_modifier + fire_event_bonus
+    base_probability: 0.86
+    max_detection_range_m: 3500
+    probabilistic: true
+    min_confidence_to_report: 0.05
+    range_decay_power: 0.85
+    blocked_los_factor: 0.35
+    fire_event_bonus: 0.18
+    fire_event_memory_s: 35
+    terrain_modifiers:
+      plain: 1.0
+      hill: 0.92
+      mountain: 0.78
+      water: 0.9
+      forest: 0.8
+      urban: 0.9
+    altitude_modifiers:
+      low: 0.8
+      mid: 0.9
+      high: 1.0
+
+  combat:
+    lanchester_range_m: 1800
+    default_k_attacker: 0.0025
+    default_k_defender: 0.0025
+    terrain_damping:
+      plain: 1.0
+      hill: 0.93
+      mountain: 0.82
+      water: 0.0
+
+  lanchester:
+    # matrix 형태로 전차 대 전차 전투 계수 정의
+    # 행(row) 타입이 열(column) 타입을 공격할 때의 Lanchester lethality.
+    kill_matrix:
+      Tiger_I:
+        Tiger_I: 0.0028
+        PzIII: 0.0035
+        PzIV: 0.0032
+        T-34: 0.0042
+        T-70: 0.0050
+      PzIII:
+        Tiger_I: 0.0014
+        PzIII: 0.0024
+        PzIV: 0.0021
+        T-34: 0.0022
+        T-70: 0.0030
+      PzIV:
+        Tiger_I: 0.0017
+        PzIII: 0.0028
+        PzIV: 0.0026
+        T-34: 0.0030
+        T-70: 0.0038
+      Panther:
+        Tiger_I: 0.0021
+        PzIII: 0.0032
+        PzIV: 0.0031
+        T-34: 0.0037
+        T-70: 0.0046
+      T-34:
+        Tiger_I: 0.0017
+        PzIII: 0.0030
+        PzIV: 0.0026
+        Panther: 0.0019
+        T-34: 0.0022
+        T-70: 0.0026
+        IS-2: 0.0018
+        SU-76: 0.0028
+      T-70:
+        Tiger_I: 0.0010
+        PzIII: 0.0022
+        PzIV: 0.0018
+        Panther: 0.0011
+        T-34: 0.0017
+        T-70: 0.0020
+      IS-2:
+        T-34: 0.0027
+        IS-2: 0.0025
+        SU-76: 0.0028
+      SU-76:
+        T-34: 0.0020
+        IS-2: 0.0016
+        SU-76: 0.0020
+
+  graphics:
+    pygame:
+      width: 1400
+      height: 900
+      fps: 60
+      show_grid: false
+      show_paths: true
+    panda3d:
+      free_cam_speed: 60
+      target_cam_speed: 120
+
+  packaging:
+    standalone:
+      icon: null
+      output_name: wargame_kursk

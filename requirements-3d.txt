@@ -1,0 +1,2 @@
+# Optional 3D dependency. Use this with Python versions supported by Panda3D wheels.
+panda3d>=1.10.15

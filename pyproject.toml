@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wargame-krusk"
+version = "0.1.0"
+description = "Configurable Python wargame simulation for the Battle of Prokhorovka/Kursk"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "PyYAML>=6.0.2",
+  "numpy>=2.0.0",
+  "pygame>=2.6.0; python_version < '3.14'",
+  "panda3d>=1.10.15; python_version < '3.14'",
+]
+
+[project.optional-dependencies]
+gui = ["pygame>=2.6.0"]
+three_d = ["panda3d>=1.10.15"]
+build = ["pyinstaller>=6.0"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+wargame-krusk = "wargame.main:main"
+wargame-krusk-grid-search = "wargame.tools.grid_search:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+wargame = ["config/*.yaml", "scenarios/*.json"]
