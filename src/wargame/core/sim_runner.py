@@ -9,6 +9,7 @@ from typing import Any
 from .battlefield import BattleField
 from .config_loader import SimulationConfig, flatten_scenario, load_config
 from .loader import parse_unit_definition
+from .unit import reset_unit_ids
 from .terrain import TerrainGrid
 
 
@@ -35,6 +36,7 @@ def build_battlefield_from_config(cfg: SimulationConfig) -> BattleField:
             terrain_path_obj = repo_root / terrain_path_obj
     terrain = TerrainGrid.from_csv(terrain_path_obj)
 
+    reset_unit_ids()
     bf = BattleField(terrain=terrain, config=cfg)
     units = [parse_unit_definition(u) for u in scenario.get("units", [])]
     bf.seed_units(units)

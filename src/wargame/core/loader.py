@@ -17,6 +17,10 @@ def _normalize_side(value: str) -> Side:
 
 def _normalize_kind(value: str) -> UnitKind:
     value = value.lower()
+    if "recon" in value or "scout" in value or "observe" in value or "observer" in value:
+        return UnitKind.RECON
+    if "cmd" in value or "command" in value or "hq" in value:
+        return UnitKind.COMMAND
     if "art" in value:
         return UnitKind.ARTILLERY
     return UnitKind.TANK

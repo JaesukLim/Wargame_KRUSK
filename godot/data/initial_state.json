@@ -1,0 +1,3085 @@
+{
+  "time_s": 0.0,
+  "terrain": {
+    "bounds": [
+      125.0,
+      125.0,
+      12375.0,
+      9875.0
+    ],
+    "width_m": 12250.0,
+    "height_m": 9750.0
+  },
+  "units": [
+    {
+      "id": "U0001",
+      "name": "B-TK-1A",
+      "side": "blue",
+      "kind": "tank",
+      "type": "Tiger_I",
+      "x": 2600,
+      "y": 6800,
+      "strength": 12.0,
+      "max_strength": 12.0,
+      "normalized_strength": 1.0,
+      "morale": 1.05,
+      "speed_mps": 7.5,
+      "armor": 1.25,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6450
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 211.58179002609137,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 12.0
+      }
+    },
+    {
+      "id": "U0002",
+      "name": "B-TK-1B",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIII",
+      "x": 3200,
+      "y": 7200,
+      "strength": 16.0,
+      "max_strength": 16.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6850
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 214.67567329959718,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 16.0
+      }
+    },
+    {
+      "id": "U0003",
+      "name": "B-TK-2A",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIII",
+      "x": 3200,
+      "y": 6400,
+      "strength": 16.0,
+      "max_strength": 16.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6050
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 217.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 16.0
+      }
+    },
+    {
+      "id": "U0004",
+      "name": "B-TK-2E",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIII",
+      "x": 3200,
+      "y": 5600,
+      "strength": 16.0,
+      "max_strength": 16.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          5250
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 187.3371209754564,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 16.0
+      }
+    },
+    {
+      "id": "U0005",
+      "name": "B-TK-1C",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 3900,
+      "y": 7400,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          7050
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 219.72964036183936,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0006",
+      "name": "B-TK-1D",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 3900,
+      "y": 6600,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6250
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 217.50080306503207,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0007",
+      "name": "B-TK-1E",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 3900,
+      "y": 5800,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          5450
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 207.70672872158946,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0008",
+      "name": "B-TK-2B",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 3900,
+      "y": 5000,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          4650
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 219.50080306503204,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0009",
+      "name": "B-TK-2C",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 4600,
+      "y": 7200,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6850
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 229.32432670040282,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0010",
+      "name": "B-TK-2D",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 4600,
+      "y": 6400,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6050
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 226.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0011",
+      "name": "B-TK-3A",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 4600,
+      "y": 5600,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          5250
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 203.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0012",
+      "name": "B-TK-3B",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 4600,
+      "y": 4800,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          4450
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 223.16927616206195,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0013",
+      "name": "B-TK-3C",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 5200,
+      "y": 6500,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          6150
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 239.24992434033857,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0014",
+      "name": "B-TK-3D",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "x": 5200,
+      "y": 5500,
+      "strength": 14.0,
+      "max_strength": 14.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 9.5,
+      "armor": 1.0,
+      "detection_range_m": 1850.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6200,
+          5150
+        ],
+        [
+          6900,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 220.8189200913252,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 14.0
+      }
+    },
+    {
+      "id": "U0015",
+      "name": "R-TK-1A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 7800,
+      "y": 7600,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7800
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 230.04890045034085,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0016",
+      "name": "R-TK-1B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 7920,
+      "y": 6800,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7000
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 234.12576797392765,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0017",
+      "name": "R-TK-1C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 7800,
+      "y": 6000,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6200
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 256.8839012757674,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0018",
+      "name": "R-TK-1D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 7920,
+      "y": 5200,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          5400
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 253.9246071114463,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0019",
+      "name": "R-TK-1E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 7800,
+      "y": 4400,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          4600
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 248.80389403062625,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0020",
+      "name": "R-TK-1F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 7920,
+      "y": 3600,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          3800
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 220.6404902024498,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0021",
+      "name": "R-TK-2A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 8500,
+      "y": 7480,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7680
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 242.86212999091512,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0022",
+      "name": "R-TK-2B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 8620,
+      "y": 6680,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6880
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 251.00000000000003,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0023",
+      "name": "R-TK-2C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 8500,
+      "y": 5880,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6080
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 255.02710180047882,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0024",
+      "name": "R-TK-2D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 8620,
+      "y": 5080,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          5280
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 245.92460711144633,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0025",
+      "name": "R-TK-2E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 8500,
+      "y": 4280,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          4480
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 246.64422484486823,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0026",
+      "name": "R-TK-2F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 8620,
+      "y": 3480,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          3680
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 222.53484839362392,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0027",
+      "name": "R-TK-3A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 9200,
+      "y": 7600,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7800
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 246.52375722072065,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0028",
+      "name": "R-TK-3B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 9320,
+      "y": 6800,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7000
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 239.1959274673008,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0029",
+      "name": "R-TK-3C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 9200,
+      "y": 6000,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6200
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 244.83660041019505,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0030",
+      "name": "R-TK-3D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 9320,
+      "y": 5200,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          5400
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 238.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0031",
+      "name": "R-TK-3E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 9200,
+      "y": 4400,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          4600
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 234.77261509053005,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0032",
+      "name": "R-TK-3F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 9320,
+      "y": 3600,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          3800
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 231.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0033",
+      "name": "R-TK-4A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 9900,
+      "y": 7480,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7680
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 238.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0034",
+      "name": "R-TK-4B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 10020,
+      "y": 6680,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6880
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 232.35310199750705,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0035",
+      "name": "R-TK-4C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 9900,
+      "y": 5880,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6080
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 237.2062569320169,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0036",
+      "name": "R-TK-4D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 10020,
+      "y": 5080,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          5280
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 235.00000000000003,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0037",
+      "name": "R-TK-4E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 9900,
+      "y": 4280,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          4480
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 236.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0038",
+      "name": "R-TK-4F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 10020,
+      "y": 3480,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          3680
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 223.7148401042752,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0039",
+      "name": "R-TK-5A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 10600,
+      "y": 7600,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7800
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 228.9974966933257,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0040",
+      "name": "R-TK-5B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "x": 10720,
+      "y": 6800,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 11.5,
+      "armor": 0.7,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          7000
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 227.56345886130714,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0041",
+      "name": "R-TK-5C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 10600,
+      "y": 6000,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6200
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 231.81207423276734,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0042",
+      "name": "R-TK-5D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 10720,
+      "y": 5200,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          5400
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 230.9062759466621,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0043",
+      "name": "R-TK-5E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 10600,
+      "y": 4400,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          4600
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 224.6128399700632,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0044",
+      "name": "R-TK-5F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 10720,
+      "y": 3600,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          3800
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 214.34297630553598,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0045",
+      "name": "R-TK-4G",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 11100,
+      "y": 6400,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          6600
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 237.3940234790541,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0046",
+      "name": "R-TK-5G",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "x": 11100,
+      "y": 5200,
+      "strength": 25.0,
+      "max_strength": 25.0,
+      "normalized_strength": 1.0,
+      "morale": 0.95,
+      "speed_mps": 10.5,
+      "armor": 0.95,
+      "detection_range_m": 2450.0,
+      "command_range_m": 3500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": null,
+      "waypoints": [
+        [
+          6100,
+          5400
+        ],
+        [
+          5400,
+          5600
+        ]
+      ],
+      "order": {},
+      "elevation_m": 219.8492142228926,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 25.0
+      }
+    },
+    {
+      "id": "U0047",
+      "name": "B-ART-1",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "x": 1100,
+      "y": 7700,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 80,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 185.57050463348165,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0048",
+      "name": "B-ART-2",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "x": 1500,
+      "y": 6900,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 80,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 182.41820997390863,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0049",
+      "name": "B-ART-3",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "x": 900,
+      "y": 6000,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 80,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 197.0485683540238,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0050",
+      "name": "B-ART-4",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "x": 1500,
+      "y": 5100,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 80,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 215.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0051",
+      "name": "B-ART-5",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "x": 1000,
+      "y": 4200,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 80,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 211.4994943366616,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0052",
+      "name": "B-ART-6",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "x": 1600,
+      "y": 3300,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 80,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 233.66162703179825,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0053",
+      "name": "R-ART-1",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "x": 11400,
+      "y": 7700,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 90,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 231.31311714465517,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0054",
+      "name": "R-ART-2",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "x": 11800,
+      "y": 6500,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 90,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 243.77371081738386,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0055",
+      "name": "R-ART-3",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "x": 11400,
+      "y": 5000,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 90,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 228.83072383793808,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0056",
+      "name": "R-ART-4",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "x": 11800,
+      "y": 3800,
+      "strength": 40.0,
+      "max_strength": 40.0,
+      "normalized_strength": 1.0,
+      "morale": 1.0,
+      "speed_mps": 2.0,
+      "armor": 1.0,
+      "detection_range_m": 1600.0,
+      "command_range_m": 6500.0,
+      "lanchester_range_m": 1800.0,
+      "ammo_remaining": 90,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 197.07390505338654,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 40.0
+      }
+    },
+    {
+      "id": "U0057",
+      "name": "B-REC-SSPz",
+      "side": "blue",
+      "kind": "recon",
+      "type": "Aufklaerung",
+      "x": 5150,
+      "y": 7550,
+      "strength": 8.0,
+      "max_strength": 8.0,
+      "normalized_strength": 1.0,
+      "morale": 1.05,
+      "speed_mps": 13.0,
+      "armor": 0.35,
+      "detection_range_m": 6500.0,
+      "command_range_m": 10000.0,
+      "lanchester_range_m": 0.0,
+      "ammo_remaining": null,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 229.11688195288275,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 8.0
+      }
+    },
+    {
+      "id": "U0058",
+      "name": "R-REC-5GTA",
+      "side": "red",
+      "kind": "recon",
+      "type": "Razvedka",
+      "x": 7900,
+      "y": 6350,
+      "strength": 8.0,
+      "max_strength": 8.0,
+      "normalized_strength": 1.0,
+      "morale": 1.05,
+      "speed_mps": 13.0,
+      "armor": 0.35,
+      "detection_range_m": 6800.0,
+      "command_range_m": 10000.0,
+      "lanchester_range_m": 0.0,
+      "ammo_remaining": null,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 248.4371160130362,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 8.0
+      }
+    },
+    {
+      "id": "U0059",
+      "name": "B-HQ-SSPz",
+      "side": "blue",
+      "kind": "command_post",
+      "type": "HQ",
+      "x": 650,
+      "y": 8350,
+      "strength": 30.0,
+      "max_strength": 30.0,
+      "normalized_strength": 1.0,
+      "morale": 1.1,
+      "speed_mps": 4.0,
+      "armor": 0.6,
+      "detection_range_m": 900.0,
+      "command_range_m": 12500.0,
+      "lanchester_range_m": 0.0,
+      "ammo_remaining": null,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 214.0,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 30.0
+      }
+    },
+    {
+      "id": "U0060",
+      "name": "R-HQ-5GTA",
+      "side": "red",
+      "kind": "command_post",
+      "type": "HQ",
+      "x": 11900,
+      "y": 8450,
+      "strength": 30.0,
+      "max_strength": 30.0,
+      "normalized_strength": 1.0,
+      "morale": 1.1,
+      "speed_mps": 4.0,
+      "armor": 0.6,
+      "detection_range_m": 900.0,
+      "command_range_m": 12500.0,
+      "lanchester_range_m": 0.0,
+      "ammo_remaining": null,
+      "waypoints": [],
+      "order": {},
+      "elevation_m": 221.06610619935697,
+      "damage_state": {
+        "killed": 0.0,
+        "mobility_kill": 0.0,
+        "firepower_kill": 0.0,
+        "no_kill": 30.0
+      }
+    }
+  ],
+  "shells": [],
+  "fire_missions": [],
+  "summary": {
+    "active_units": 60,
+    "red_strength": 998.0,
+    "blue_strength": 478.0,
+    "active_contacts": 0,
+    "ended": false,
+    "winner": null,
+    "end_reason": null,
+    "red_tanks": 32,
+    "blue_tanks": 14,
+    "expected_duration_s": 3600.0,
+    "progress_ratio": 0.0,
+    "current_frame": 0,
+    "total_frames": 120
+  },
+  "parameters": {
+    "direct_fire_scale": 1.0,
+    "combat_speed_scale": 0.6,
+    "artillery_delay_s": 240.0,
+    "artillery_damage_scale": 1.0,
+    "target_area_scale": 1.0
+  },
+  "lanchester_matrix": {
+    "Tiger_I": {
+      "Tiger_I": 0.0028,
+      "PzIII": 0.0035,
+      "PzIV": 0.0032,
+      "T-34": 0.0048,
+      "T-70": 0.0056
+    },
+    "PzIII": {
+      "Tiger_I": 0.0014,
+      "PzIII": 0.0024,
+      "PzIV": 0.0021,
+      "T-34": 0.0024,
+      "T-70": 0.0032
+    },
+    "PzIV": {
+      "Tiger_I": 0.0017,
+      "PzIII": 0.0028,
+      "PzIV": 0.0026,
+      "T-34": 0.0034,
+      "T-70": 0.0041
+    },
+    "Panther": {
+      "Tiger_I": 0.0021,
+      "PzIII": 0.0032,
+      "PzIV": 0.0031,
+      "T-34": 0.0042,
+      "T-70": 0.005
+    },
+    "T-34": {
+      "Tiger_I": 0.0012,
+      "PzIII": 0.0027,
+      "PzIV": 0.0022,
+      "Panther": 0.0014,
+      "T-34": 0.0022,
+      "T-70": 0.0026,
+      "IS-2": 0.0018,
+      "SU-76": 0.0028
+    },
+    "T-70": {
+      "Tiger_I": 0.0007,
+      "PzIII": 0.0019,
+      "PzIV": 0.0015,
+      "Panther": 0.0008,
+      "T-34": 0.0017,
+      "T-70": 0.002
+    },
+    "IS-2": {
+      "T-34": 0.0027,
+      "IS-2": 0.0025,
+      "SU-76": 0.0028
+    },
+    "SU-76": {
+      "T-34": 0.002,
+      "IS-2": 0.0016,
+      "SU-76": 0.002
+    }
+  },
+  "model": {
+    "direct_fire": "Lanchester Square Law",
+    "indirect_fire": "Lanchester Linear Law + DES delay",
+    "targeting": "Greedy WTA",
+    "damage_state": "4-State K/M/F/No-kill aggregate",
+    "combat_power": "Bracken weighted strength"
+  },
+  "contacts": [],
+  "events": [
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-1A added to battlefield",
+      "unit_id": "U0001",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "Tiger_I",
+        "x": 2600,
+        "y": 6800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-1B added to battlefield",
+      "unit_id": "U0002",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIII",
+        "x": 3200,
+        "y": 7200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-2A added to battlefield",
+      "unit_id": "U0003",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIII",
+        "x": 3200,
+        "y": 6400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-2E added to battlefield",
+      "unit_id": "U0004",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIII",
+        "x": 3200,
+        "y": 5600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-1C added to battlefield",
+      "unit_id": "U0005",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 3900,
+        "y": 7400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-1D added to battlefield",
+      "unit_id": "U0006",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 3900,
+        "y": 6600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-1E added to battlefield",
+      "unit_id": "U0007",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 3900,
+        "y": 5800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-2B added to battlefield",
+      "unit_id": "U0008",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 3900,
+        "y": 5000
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-2C added to battlefield",
+      "unit_id": "U0009",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 4600,
+        "y": 7200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-2D added to battlefield",
+      "unit_id": "U0010",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 4600,
+        "y": 6400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-3A added to battlefield",
+      "unit_id": "U0011",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 4600,
+        "y": 5600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-3B added to battlefield",
+      "unit_id": "U0012",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 4600,
+        "y": 4800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-3C added to battlefield",
+      "unit_id": "U0013",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 5200,
+        "y": 6500
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-TK-3D added to battlefield",
+      "unit_id": "U0014",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "tank",
+        "type": "PzIV",
+        "x": 5200,
+        "y": 5500
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-1A added to battlefield",
+      "unit_id": "U0015",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 7800,
+        "y": 7600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-1B added to battlefield",
+      "unit_id": "U0016",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 7920,
+        "y": 6800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-1C added to battlefield",
+      "unit_id": "U0017",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 7800,
+        "y": 6000
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-1D added to battlefield",
+      "unit_id": "U0018",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 7920,
+        "y": 5200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-1E added to battlefield",
+      "unit_id": "U0019",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 7800,
+        "y": 4400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-1F added to battlefield",
+      "unit_id": "U0020",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 7920,
+        "y": 3600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-2A added to battlefield",
+      "unit_id": "U0021",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 8500,
+        "y": 7480
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-2B added to battlefield",
+      "unit_id": "U0022",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 8620,
+        "y": 6680
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-2C added to battlefield",
+      "unit_id": "U0023",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 8500,
+        "y": 5880
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-2D added to battlefield",
+      "unit_id": "U0024",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 8620,
+        "y": 5080
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-2E added to battlefield",
+      "unit_id": "U0025",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 8500,
+        "y": 4280
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-2F added to battlefield",
+      "unit_id": "U0026",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 8620,
+        "y": 3480
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-3A added to battlefield",
+      "unit_id": "U0027",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 9200,
+        "y": 7600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-3B added to battlefield",
+      "unit_id": "U0028",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 9320,
+        "y": 6800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-3C added to battlefield",
+      "unit_id": "U0029",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 9200,
+        "y": 6000
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-3D added to battlefield",
+      "unit_id": "U0030",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 9320,
+        "y": 5200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-3E added to battlefield",
+      "unit_id": "U0031",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 9200,
+        "y": 4400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-3F added to battlefield",
+      "unit_id": "U0032",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 9320,
+        "y": 3600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4A added to battlefield",
+      "unit_id": "U0033",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 9900,
+        "y": 7480
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4B added to battlefield",
+      "unit_id": "U0034",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 10020,
+        "y": 6680
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4C added to battlefield",
+      "unit_id": "U0035",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 9900,
+        "y": 5880
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4D added to battlefield",
+      "unit_id": "U0036",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 10020,
+        "y": 5080
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4E added to battlefield",
+      "unit_id": "U0037",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 9900,
+        "y": 4280
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4F added to battlefield",
+      "unit_id": "U0038",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 10020,
+        "y": 3480
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5A added to battlefield",
+      "unit_id": "U0039",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 10600,
+        "y": 7600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5B added to battlefield",
+      "unit_id": "U0040",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-70",
+        "x": 10720,
+        "y": 6800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5C added to battlefield",
+      "unit_id": "U0041",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 10600,
+        "y": 6000
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5D added to battlefield",
+      "unit_id": "U0042",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 10720,
+        "y": 5200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5E added to battlefield",
+      "unit_id": "U0043",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 10600,
+        "y": 4400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5F added to battlefield",
+      "unit_id": "U0044",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 10720,
+        "y": 3600
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-4G added to battlefield",
+      "unit_id": "U0045",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 11100,
+        "y": 6400
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-TK-5G added to battlefield",
+      "unit_id": "U0046",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "tank",
+        "type": "T-34",
+        "x": 11100,
+        "y": 5200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-ART-1 added to battlefield",
+      "unit_id": "U0047",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "artillery",
+        "type": "leFH18",
+        "x": 1100,
+        "y": 7700
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-ART-2 added to battlefield",
+      "unit_id": "U0048",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "artillery",
+        "type": "leFH18",
+        "x": 1500,
+        "y": 6900
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-ART-3 added to battlefield",
+      "unit_id": "U0049",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "artillery",
+        "type": "leFH18",
+        "x": 900,
+        "y": 6000
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-ART-4 added to battlefield",
+      "unit_id": "U0050",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "artillery",
+        "type": "leFH18",
+        "x": 1500,
+        "y": 5100
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-ART-5 added to battlefield",
+      "unit_id": "U0051",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "artillery",
+        "type": "leFH18",
+        "x": 1000,
+        "y": 4200
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-ART-6 added to battlefield",
+      "unit_id": "U0052",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "artillery",
+        "type": "leFH18",
+        "x": 1600,
+        "y": 3300
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-ART-1 added to battlefield",
+      "unit_id": "U0053",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "artillery",
+        "type": "M-30",
+        "x": 11400,
+        "y": 7700
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-ART-2 added to battlefield",
+      "unit_id": "U0054",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "artillery",
+        "type": "M-30",
+        "x": 11800,
+        "y": 6500
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-ART-3 added to battlefield",
+      "unit_id": "U0055",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "artillery",
+        "type": "M-30",
+        "x": 11400,
+        "y": 5000
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-ART-4 added to battlefield",
+      "unit_id": "U0056",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "artillery",
+        "type": "M-30",
+        "x": 11800,
+        "y": 3800
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-REC-SSPz added to battlefield",
+      "unit_id": "U0057",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "recon",
+        "type": "Aufklaerung",
+        "x": 5150,
+        "y": 7550
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-REC-5GTA added to battlefield",
+      "unit_id": "U0058",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "recon",
+        "type": "Razvedka",
+        "x": 7900,
+        "y": 6350
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "B-HQ-SSPz added to battlefield",
+      "unit_id": "U0059",
+      "target_id": null,
+      "side": "blue",
+      "data": {
+        "kind": "command",
+        "type": "HQ",
+        "x": 650,
+        "y": 8350
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "command_post",
+      "message": "B-HQ-SSPz command post established in rear area",
+      "unit_id": "U0059",
+      "target_id": null,
+      "side": "blue",
+      "data": {}
+    },
+    {
+      "time_s": 0.0,
+      "category": "unit_added",
+      "message": "R-HQ-5GTA added to battlefield",
+      "unit_id": "U0060",
+      "target_id": null,
+      "side": "red",
+      "data": {
+        "kind": "command",
+        "type": "HQ",
+        "x": 11900,
+        "y": 8450
+      }
+    },
+    {
+      "time_s": 0.0,
+      "category": "command_post",
+      "message": "R-HQ-5GTA command post established in rear area",
+      "unit_id": "U0060",
+      "target_id": null,
+      "side": "red",
+      "data": {}
+    },
+    {
+      "time_s": 0.0,
+      "category": "parameters",
+      "message": "Runtime model parameters updated",
+      "unit_id": null,
+      "target_id": null,
+      "side": null,
+      "data": {
+        "direct_fire_scale": 1.0,
+        "combat_speed_scale": 0.6,
+        "artillery_delay_s": 240.0,
+        "artillery_damage_scale": 1.0,
+        "target_area_scale": 1.0
+      }
+    }
+  ],
+  "replay_frames": [],
+  "backend": {
+    "host": "127.0.0.1",
+    "port": 8765,
+    "transport": [
+      "http",
+      "websocket"
+    ],
+    "api_version": "0.2.0",
+    "schema_version": "2026-05-20.1"
+  }
+}

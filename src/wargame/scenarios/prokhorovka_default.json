@@ -1548,6 +1548,82 @@
       "shell_speed_mps": 330,
       "shell_dispersion_m": 210,
       "ammo_limit": 90
+    },
+    {
+      "name": "B-REC-SSPz",
+      "side": "blue",
+      "kind": "recon",
+      "type": "Aufklaerung",
+      "position": [
+        5150,
+        7550
+      ],
+      "strength": 8,
+      "max_strength": 8,
+      "path": [],
+      "speed_mps": 13.0,
+      "detection_range_m": 6500,
+      "command_range_m": 10000,
+      "lanchester_range_m": 0,
+      "morale": 1.05,
+      "armor": 0.35
+    },
+    {
+      "name": "R-REC-5GTA",
+      "side": "red",
+      "kind": "recon",
+      "type": "Razvedka",
+      "position": [
+        7900,
+        6350
+      ],
+      "strength": 8,
+      "max_strength": 8,
+      "path": [],
+      "speed_mps": 13.0,
+      "detection_range_m": 6800,
+      "command_range_m": 10000,
+      "lanchester_range_m": 0,
+      "morale": 1.05,
+      "armor": 0.35
+    },
+    {
+      "name": "B-HQ-SSPz",
+      "side": "blue",
+      "kind": "command",
+      "type": "HQ",
+      "position": [
+        650,
+        8350
+      ],
+      "strength": 30,
+      "max_strength": 30,
+      "path": [],
+      "speed_mps": 4.0,
+      "detection_range_m": 900,
+      "command_range_m": 12500,
+      "lanchester_range_m": 0,
+      "morale": 1.1,
+      "armor": 0.6
+    },
+    {
+      "name": "R-HQ-5GTA",
+      "side": "red",
+      "kind": "command",
+      "type": "HQ",
+      "position": [
+        11900,
+        8450
+      ],
+      "strength": 30,
+      "max_strength": 30,
+      "path": [],
+      "speed_mps": 4.0,
+      "detection_range_m": 900,
+      "command_range_m": 12500,
+      "lanchester_range_m": 0,
+      "morale": 1.1,
+      "armor": 0.6
     }
   ]
 }

@@ -19,6 +19,8 @@ class Side(str, Enum):
 class UnitKind(str, Enum):
     TANK = "tank"
     ARTILLERY = "artillery"
+    COMMAND = "command"
+    RECON = "recon"
 
 
 @dataclass(frozen=True)

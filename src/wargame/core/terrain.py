@@ -17,6 +17,8 @@ class TerrainCell:
     col: int
     x: float
     y: float
+    lat: float
+    lon: float
     elevation_m: float
     slope_deg: float
     roughness_m: float
@@ -87,6 +89,8 @@ class TerrainGrid:
                     col=c,
                     x=float(row["x_m"]),
                     y=float(row["y_m"]),
+                    lat=float(row.get("lat", 0.0)),
+                    lon=float(row.get("lon", 0.0)),
                     elevation_m=float(row["elev_m"]),
                     slope_deg=float(row["slope_deg"]),
                     roughness_m=float(row["roughness_m"]),
@@ -229,3 +233,46 @@ class TerrainGrid:
 
     def all_units(self) -> List[TerrainCell]:
         return list(self.cells.values())
+
+    def export_payload(self) -> dict:
+        """Return compact terrain data for Godot 3D mesh generation.
+
+        The CSV has only ~2k cells, so a full localhost payload keeps the Godot
+        client independent from Python file paths and allows standalone UI
+        packaging to request terrain from the backend at runtime.
+        """
+
+        elevations = [cell.elevation_m for cell in self.cells.values()]
+        slopes = [cell.slope_deg for cell in self.cells.values()]
+        cells = [
+            {
+                "row": cell.row,
+                "col": cell.col,
+                "x": cell.x,
+                "y": cell.y,
+                "elevation_m": cell.elevation_m,
+                "slope_deg": cell.slope_deg,
+                "roughness_m": cell.roughness_m,
+                "local_relief_m": cell.local_relief_m,
+                "landform": cell.landform_name,
+                "water": cell.water,
+                "road": cell.road,
+                "rail": cell.rail,
+                "antitank_ditch": cell.antitank_ditch,
+                "move_cost_vehicle": cell.move_cost_vehicle,
+            }
+            for cell in sorted(self.cells.values(), key=lambda c: (c.row, c.col))
+        ]
+        return {
+            "bounds": list(self.bounds),
+            "width_m": self.width_m(),
+            "height_m": self.height_m(),
+            "rows": self.n_rows,
+            "cols": self.n_cols,
+            "cell_size_m": self.cell_size_m,
+            "min_elevation_m": min(elevations),
+            "max_elevation_m": max(elevations),
+            "min_slope_deg": min(slopes),
+            "max_slope_deg": max(slopes),
+            "cells": cells,
+        }

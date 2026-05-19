@@ -4,12 +4,17 @@ from __future__ import annotations
 
 import itertools
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any, Optional
 
 from .types import MovementPath, Point, Side, UnitKind
 
 
 _id_counter = itertools.count(1)
+
+
+def reset_unit_ids() -> None:
+    global _id_counter
+    _id_counter = itertools.count(1)
 
 
 def _new_id() -> str:
@@ -51,6 +56,7 @@ class Unit:
     reload_timer: float = 0.0
     waypoint_eps_m: float = 10.0
     last_fired_at: float = -1_000_000.0
+    current_order: dict[str, Any] = field(default_factory=dict)
 
     def is_alive(self) -> bool:
         return self.strength > 0
@@ -67,6 +73,14 @@ class Unit:
     def is_artillery(self) -> bool:
         return self.kind == UnitKind.ARTILLERY
 
+    @property
+    def is_command(self) -> bool:
+        return self.kind == UnitKind.COMMAND
+
+    @property
+    def is_recon(self) -> bool:
+        return self.kind == UnitKind.RECON
+
 
 @dataclass
 class ShellImpact:
@@ -79,10 +93,11 @@ class ShellImpact:
     launch_time: float
     impact_time: float
     accuracy: float
+    radius_m: float = 0.0
+    kind: str = "artillery"
     active: bool = True
     landed: bool = False
 
-    @property
     def remaining_time(self, now: float) -> float:
         return max(0.0, self.impact_time - now)
 
