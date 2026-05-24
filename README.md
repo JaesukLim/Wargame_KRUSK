@@ -77,7 +77,7 @@
 | `lanchester_kill_rate` | `Unit.lanchester_kills`에 로드됩니다. 현재 직사 교전은 pairwise 행렬을 사용하므로 직접 사용되지 않습니다. | `0.0` |
 | `armor` | 방호/장갑 스칼라로 상태에 저장됩니다. 현재 직사 피해 계산은 Lanchester 행렬 값을 사용합니다. | `1.0` |
 | `morale` | 직사 교전에서 피로/효율 계수로 사용됩니다. | `1.0` |
-| `path` | 경유점 목록 `[[x, y], ...]` | `[]` |
+| `path` | 경유점 목록 `[[x, y], ...]` | `[]`. `kind == tank`인 부대는 시나리오 로드 시 진영별 하드코딩 destination과 산포된 중간 경유점 1개로 자동 덮어쓰기됩니다(자세한 내용은 5절 참고). |
 | `path_loop` | true이면 마지막 경유점 이후 처음으로 반복합니다. | `false` |
 | `color` | 클라이언트에 export되는 부대 색상 | `#ffffff` |
 | `fire_range_m` | 전차 전용 필드. 현재 전차 교전 계산에는 사용되지 않습니다. | `None` |
@@ -191,9 +191,9 @@ kill_matrix:
 | `slope_deg` | 경사 |
 | `roughness_m` | 국지 roughness |
 | `local_relief_m` | 국지 기복 |
-| `landform_code`, `landform_name` | 탐지/전투 보정에 쓰이는 지형 분류 |
-| `move_cost_infantry`, `move_cost_vehicle` | 이동 비용. 차량은 `move_cost_vehicle`을 사용합니다. |
-| `water` | true이면 이동 비용이 무한대가 되어 이동을 차단합니다. |
+| `landform_code`, `landform_name` | 탐지/전투 보정에 쓰이는 지형 분류. 이동 비용도 `landform_name`에서 산출합니다(아래). |
+| `move_cost_infantry`, `move_cost_vehicle` | CSV에 저장되지만 런타임 이동 비용 계산에는 사용되지 않습니다. `terrain.py`의 `SPEED_MULT_BY_LANDFORM` 표가 우선합니다. |
+| `water` | true이면 해당 셀은 하천으로 취급되어 기본 속도의 20%로 통과합니다(과거의 무한 차단 동작은 제거되었습니다). |
 | `road`, `rail`, `antitank_ditch` | export되는 지형 속성입니다. 현재 CSV 이동 비용 외 별도 이동 보정으로는 쓰이지 않습니다. |
 
 ### 3. 교전 논리(전차)
@@ -362,18 +362,26 @@ no_kill = max(strength, 0)
 3. waypoint가 없으면 위치를 유지합니다.
 4. 현재 목표는 `movement_path.current_target()`입니다.
 5. 목표까지의 거리가 `<= waypoint_eps_m`이면 다음 waypoint로 진행합니다. 기본값은 `10 m`입니다.
-6. 현재 위치의 terrain cell에서 차량 이동 비용을 읽습니다.
-   - water는 무한 비용을 반환하여 이동을 차단합니다.
-   - 그 외에는 속도를 `move_cost_vehicle`로 나눕니다.
+6. 현재 위치의 terrain cell에서 이동 비용을 읽습니다(`terrain.movement_cost`).
+   - 비용은 `landform_name`과 `water` boolean에서 산출됩니다. 보병/차량 동일하게 적용됩니다.
+   - 기본 속도 배율표(`SPEED_MULT_BY_LANDFORM`, `terrain.py`): plain `1.0`, hill `0.8`, forest `0.7`, urban `1.0`, mountain `0.5`, landform `water` `0.2`.
+   - `water == True`인 셀은 하천으로 처리되어 배율 `0.2`(비용 5.0)를 사용합니다.
 7. 위치는 다음만큼 전진합니다.
 
    ```text
-   effective_speed = speed_mps / move_cost_vehicle
+   effective_speed = speed_mps / movement_cost
    step_distance = effective_speed * dt
    ```
 
 8. waypoint를 지나치지 않도록 이동량은 clamp됩니다.
 9. `path_loop`가 true이면 마지막 waypoint 이후 index가 0으로 돌아갑니다. false이면 마지막 waypoint에 머뭅니다.
+
+전차 부대 자동 경로 할당(`sim_runner.py`):
+
+- 시나리오 로드 직후, `kind == tank`인 모든 부대의 `movement_path`는 `[산포된 중간 경유점, 진영별 destination]` 두 점으로 덮어쓰기됩니다. 시나리오 JSON에 명시된 `path`는 전차에 대해 무시됩니다.
+- 하드코딩 destination(`sim_runner.RED_DESTINATION`, `sim_runner.BLUE_DESTINATION`): Red는 `(2700, 3950)`(블루 스폰 중앙), Blue는 `(12000, 15000)`(플레이박스 북동쪽).
+- 중간 경유점은 출발지와 destination의 중점에 진격 방향에 수직인 lateral scatter `±1500 m`와 axis-jitter `±500 m`를 더해 생성됩니다. 재현성을 위해 `simulation.random_seed`로 seeded RNG를 사용합니다.
+- artillery / command / recon 부대의 `path`는 자동 덮어쓰기 대상이 아니며 시나리오 JSON 값을 그대로 사용합니다.
 
 unit command 입력:
 
