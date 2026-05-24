@@ -22,7 +22,11 @@ def build_battlefield_from_config(cfg: SimulationConfig) -> BattleField:
     scenario = flatten_scenario(cfg.raw)
 
     terrain_cfg = scenario.get("terrain", {})
-    terrain_path = terrain_cfg.get("csv") or "DEM_data_1/prokhorovka_terrain_250m.csv"
+    terrain_path = (
+        terrain_cfg.get("npz")
+        or terrain_cfg.get("csv")
+        or "DEM_data_1/prokhorovka_terrain_250m.csv"
+    )
     terrain_path_obj = Path(terrain_path)
     if not terrain_path_obj.is_absolute() and not terrain_path_obj.exists():
         # PyInstaller extracts --add-data files under sys._MEIPASS.
@@ -34,7 +38,10 @@ def build_battlefield_from_config(cfg: SimulationConfig) -> BattleField:
         if not terrain_path_obj.exists():
             repo_root = Path(__file__).resolve().parents[3]
             terrain_path_obj = repo_root / terrain_path_obj
-    terrain = TerrainGrid.from_csv(terrain_path_obj)
+    if terrain_path_obj.suffix.lower() == ".npz":
+        terrain = TerrainGrid.from_npz(terrain_path_obj)
+    else:
+        terrain = TerrainGrid.from_csv(terrain_path_obj)
 
     reset_unit_ids()
     bf = BattleField(terrain=terrain, config=cfg)

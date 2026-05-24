@@ -1,0 +1,17 @@
+# Local Python virtual environment
+/.venv/
+
+# Python bytecode / packaging artifacts (regenerated on import / pip install)
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Godot 4 editor cache (regenerated on first project open)
+godot/.godot/
+
+# Standalone Godot build outputs
+dist/
+
+# QA / preview artifacts from terrain preprocessing
+DEM_data_1/*.preview.png
+DEM_data_1/*.summary.txt
