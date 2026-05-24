@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import math
+import random
 import sys
 from pathlib import Path
 from typing import Any
@@ -9,8 +11,40 @@ from typing import Any
 from .battlefield import BattleField
 from .config_loader import SimulationConfig, flatten_scenario, load_config
 from .loader import parse_unit_definition
-from .unit import reset_unit_ids
+from .types import MovementPath, Point, Side, UnitKind
+from .unit import Unit, reset_unit_ids
 from .terrain import TerrainGrid
+
+
+# Hardcoded objectives. RED attacks toward the center of the BLUE spawn
+# (southwest), BLUE attacks toward the top-right of the playbox (northeast).
+RED_DESTINATION = Point(2700.0, 3950.0)
+BLUE_DESTINATION = Point(12000.0, 15000.0)
+
+# Lateral spread (perpendicular to advance) and along-axis jitter applied to
+# the single midway waypoint. Tuned to ~10% of the playbox width so units form
+# a visible flanking arc without leaving the map.
+WAYPOINT_LATERAL_SCATTER_M = 1500.0
+WAYPOINT_ALONG_SCATTER_M = 500.0
+
+
+def _assign_team_route(unit: Unit, rng: random.Random) -> None:
+    """Replace a tank's waypoint list with [scattered_midpoint, team_destination].
+
+    The midpoint is offset perpendicular to the line of advance so units fan
+    out across the front instead of converging on a single attack axis.
+    """
+
+    dest = RED_DESTINATION if unit.side == Side.RED else BLUE_DESTINATION
+    dx = dest.x - unit.position.x
+    dy = dest.y - unit.position.y
+    norm = math.hypot(dx, dy) or 1.0
+    perp_x, perp_y = -dy / norm, dx / norm
+    lateral = rng.uniform(-WAYPOINT_LATERAL_SCATTER_M, WAYPOINT_LATERAL_SCATTER_M)
+    along = rng.uniform(-WAYPOINT_ALONG_SCATTER_M, WAYPOINT_ALONG_SCATTER_M)
+    mx = (unit.position.x + dest.x) / 2.0 + perp_x * lateral + (dx / norm) * along
+    my = (unit.position.y + dest.y) / 2.0 + perp_y * lateral + (dy / norm) * along
+    unit.movement_path = MovementPath(waypoints=[Point(mx, my), dest], loop=False)
 
 
 def build_battlefield(config_path: str | None = None, scenario_path: str | None = None) -> BattleField:
@@ -46,6 +80,13 @@ def build_battlefield_from_config(cfg: SimulationConfig) -> BattleField:
     reset_unit_ids()
     bf = BattleField(terrain=terrain, config=cfg)
     units = [parse_unit_definition(u) for u in scenario.get("units", [])]
+
+    route_seed = int(cfg.get("simulation", "random_seed", default=19430712))
+    route_rng = random.Random(route_seed)
+    for unit in units:
+        if unit.kind == UnitKind.TANK:
+            _assign_team_route(unit, route_rng)
+
     bf.seed_units(units)
     return bf
 
