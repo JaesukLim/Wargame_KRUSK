@@ -11,6 +11,19 @@ from typing import Dict, List
 from .types import Point
 
 
+# Speed multiplier applied to a unit's base speed when traversing a cell.
+# Effective movement cost (the divisor used in battlefield.py) is 1 / multiplier.
+SPEED_MULT_BY_LANDFORM: Dict[str, float] = {
+    "plain": 1.0,
+    "hill": 0.8,
+    "forest": 0.7,
+    "water": 0.2,
+    "urban": 1.0,
+    "mountain": 0.5,
+}
+RIVER_SPEED_MULT = 0.2
+
+
 @dataclass(frozen=True)
 class TerrainCell:
     row: int
@@ -363,10 +376,9 @@ class TerrainGrid:
         r, c = self.rowcol_for_position(pos)
         cell = self.cells[(r, c)]
         if cell.water:
-            return float("inf")
-        if unit_class == "infantry":
-            return max(0.0001, cell.move_cost_infantry)
-        return max(0.0001, cell.move_cost_vehicle)
+            return 1.0 / RIVER_SPEED_MULT
+        mult = SPEED_MULT_BY_LANDFORM.get(cell.landform_name, 1.0)
+        return 1.0 / max(mult, 0.0001)
 
     def elevation_band(self, pos: Point) -> str:
         """Classify elevation as low/mid/high for detection modifiers."""
