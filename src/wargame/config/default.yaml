@@ -13,9 +13,25 @@
     port: 8765
 
   detection:
-    # Scanned probabilistic detection.
+    # Scanned probabilistic detection. Only tanks (기갑) and recon (정찰) scan;
+    # artillery fires on relayed recon intel (recon -> HQ -> artillery), so it
+    # is not a detector itself.
     # confidence = base * range_factor * terrain_modifier * altitude_modifier + fire_event_bonus
-    base_probability: 0.86
+    base_probability: 0.86            # default for detectors not in the table (e.g. recon)
+    base_probability_by_kind:
+      tank: 0.8                       # 기갑
+
+    # Scan-grid cell size in meters. Adjustable per team discussion.
+    grid_cell_size_m: 250
+
+    # Detection range expressed in grid cells. Actual meters = cells * grid_cell_size_m.
+    # tank: 발표자료 기갑(독일5/소련7). recon: kept large (legacy meters -> cells) so the
+    # recon -> HQ -> artillery tasking chain keeps working. artillery/command omitted
+    # (not detectors); they keep their scenario meters (inert).
+    detection_range_cells:
+      tank:  { blue: 5,  red: 7  }
+      recon: { blue: 26, red: 27 }
+
     max_detection_range_m: 3500
     probabilistic: true
     min_confidence_to_report: 0.05
@@ -30,10 +46,10 @@
       water: 0.9
       forest: 0.8
       urban: 0.9
-    altitude_modifiers:
-      low: 0.8
+    altitude_modifiers:       # low ground favored (저고도일수록 탐지율 높음)
+      low: 1.0
       mid: 0.9
-      high: 1.0
+      high: 0.8
 
   combat:
     lanchester_range_m: 1800

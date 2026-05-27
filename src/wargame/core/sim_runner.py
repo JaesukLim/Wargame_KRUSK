@@ -100,6 +100,20 @@ def build_battlefield_from_config(cfg: SimulationConfig) -> BattleField:
         if auto_assign_tank_routes and not has_scenario_path:
             _assign_team_route(unit, route_rng)
 
+    # Override detection ranges from the cell-based config table.
+    # detection_range_m = cells * grid_cell_size_m, keyed by (kind, side).
+    # Kinds absent from the table (artillery/command) keep their scenario meters.
+    det_cfg = cfg.get("simulation", "detection", default={}) or {}
+    range_cells = det_cfg.get("detection_range_cells", {})
+    cell_size = float(det_cfg.get("grid_cell_size_m", 250.0))
+    for unit in units:
+        by_side = range_cells.get(unit.kind.value)
+        if not by_side:
+            continue
+        cells = by_side.get(unit.side.value)
+        if cells is not None:
+            unit.detection_range_m = float(cells) * cell_size
+
     bf.seed_units(units)
     return bf
 

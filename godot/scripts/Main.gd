@@ -72,6 +72,10 @@ var _input_smoke_action_index := 0
 var _input_smoke_executed: Array = []
 var _view_mode := "2d"
 var _tool_mode := "select"
+var _show_detection_ranges := false
+var _grid_size_input: LineEdit = null
+var _grid_cell_size_override := 0.0   # 0 = use backend value
+var _grid_input_rect := Rect2()
 var _order_mode := "move"
 var _unit_orders: Dictionary = {}
 var _manual_queue: Array = []
@@ -159,6 +163,16 @@ func _ready() -> void:
     BackendClient.connect_websocket()
     _request_backend_snapshot.call_deferred()
     _status = "Backend 연결 시도 중"
+    # Floating text box to set the scan-grid cell size (meters) at runtime.
+    _grid_size_input = LineEdit.new()
+    _grid_size_input.placeholder_text = "m"
+    _grid_size_input.tooltip_text = "탐색 그리드 칸 크기(m) — 숫자 입력 후 Enter"
+    _grid_size_input.alignment = HORIZONTAL_ALIGNMENT_CENTER
+    _grid_size_input.add_theme_font_size_override("font_size", 12)
+    _grid_size_input.text = "250"
+    _grid_size_input.visible = false
+    _grid_size_input.text_submitted.connect(_on_grid_size_submitted)
+    add_child(_grid_size_input)
 
 func _parse_args() -> void:
     var args := OS.get_cmdline_args()
@@ -199,6 +213,16 @@ func _process(delta: float) -> void:
             _step_timer = STEP_REAL_INTERVAL / float(_speeds[_speed_index])
             _status = "실행 중 - +%0.0f초 tick 요청" % STEP_SECONDS
             BackendClient.step(STEP_SECONDS, 1)
+    # Keep redrawing while enemies are detected so the pastel-red cells pulse.
+    if not (_state.get("detections", []) as Array).is_empty():
+        queue_redraw()
+    # Keep the grid-size text box aligned with its toolbar slot (2D view only).
+    if _grid_size_input:
+        var show_input: bool = (_view_mode == "2d" and _grid_input_rect.size.x > 0.0)
+        _grid_size_input.visible = show_input
+        if show_input:
+            _grid_size_input.position = _grid_input_rect.position
+            _grid_size_input.size = _grid_input_rect.size
     if _input_smoke_path != "":
         _run_input_smoke()
     if _pending_screenshot:
@@ -411,6 +435,12 @@ func _draw_map() -> void:
     for tool in tools:
         _button(Rect2(tx, toolbar.position.y + 5, 52, 24), str(tool[0]), str(tool[1]), _tool_mode == str(tool[2]))
         tx += 58
+    _button(Rect2(tx, toolbar.position.y + 5, 72, 24), "탐색범위", "toggle_detection_ranges", _show_detection_ranges)
+    tx += 78
+    _text("그리드", Vector2(tx, toolbar.position.y + 22), 10, MUTED, 44)
+    tx += 40
+    _grid_input_rect = Rect2(tx, toolbar.position.y + 5, 56, 24)
+    tx += 62
     var zoom_label := " · 2D 줌 %d%%" % int(round(_map_zoom * 100.0)) if _view_mode == "2d" else ""
     var status_x: float = min(tx + 8.0, toolbar.end.x - 380.0)
     _text("%s / %s%s   단축키: S 선택, M 이동, F 공격, 1/2 뷰" % [_view_label(), _tool_label(), zoom_label], Vector2(status_x, toolbar.position.y + 23), 10, GOLD, max(180.0, toolbar.end.x - status_x - 12.0))
@@ -499,8 +529,11 @@ func _draw_elevation_peak_labels(r: Rect2) -> void:
 
 
 func _draw_map_overlays(r: Rect2) -> void:
-    if _state.has("units"):
-        _draw_recon_coverage(_state.get("units", []), r)
+    # Detection scan-range grid (toggleable). Replaces the old dashed circle.
+    if _show_detection_ranges and _state.has("units"):
+        _draw_detection_grid(_state.get("units", []), r)
+    # Cells where an enemy was detected this step pulse in pastel red (always on).
+    _draw_detected_cells(r)
 
 
 func _draw_recon_coverage(units: Array, _r: Rect2) -> void:
@@ -528,6 +561,103 @@ func _draw_dashed_circle(center: Vector2, radius: float, color: Color, width: fl
         var a0 := TAU * float(i) / float(segments)
         var a1 := TAU * float(i + 1) / float(segments)
         draw_arc(center, radius, a0, a1, 5, color, width, true)
+
+func _scan_cell_screen_size(center_world: Vector2, gs: float, bounds: Array) -> Vector2:
+    # Project a gs x gs world box to screen to get the on-screen cell size (zoom-aware).
+    var a := _world_to_screen(center_world, bounds)
+    var b := _world_to_screen(center_world + Vector2(gs, gs), bounds)
+    return Vector2(max(abs(b.x - a.x), 1.0), max(abs(b.y - a.y), 1.0))
+
+func _effective_grid_size() -> float:
+    # Runtime text-box override wins; otherwise use the backend's grid cell size.
+    if _grid_cell_size_override > 0.0:
+        return _grid_cell_size_override
+    return float(_state.get("detection_grid_cell_size_m", 250.0))
+
+func _on_grid_size_submitted(text: String) -> void:
+    var v := text.strip_edges().to_float()
+    if v >= 10.0:
+        _grid_cell_size_override = v
+        _status = "탐색 그리드 칸 크기: %dm" % int(round(v))
+    else:
+        _status = "그리드 크기는 10m 이상이어야 합니다"
+    if _grid_size_input:
+        _grid_size_input.release_focus()
+    queue_redraw()
+
+func _draw_detection_grid(units: Array, _r: Rect2) -> void:
+    # Tanks only: RED team grid = gray, BLUE team grid = black. Cell size from the text box.
+    var bounds: Array = _state.get("terrain", {}).get("bounds", _bounds_from_units(units))
+    var gs := _effective_grid_size()
+    if gs <= 0.0:
+        return
+    for unit in units:
+        var kind := str(unit.get("kind", ""))
+        if kind != "tank":
+            continue
+        var rng := float(unit.get("detection_range_m", 0.0))
+        if rng <= 0.0:
+            continue
+        var ux := float(unit.get("x", 0.0))
+        var uy := float(unit.get("y", 0.0))
+        var is_red := str(unit.get("side", "")) == "red"
+        var base: Color = Color(0.62, 0.62, 0.62) if is_red else Color(0.05, 0.05, 0.05)
+        var fill := Color(base.r, base.g, base.b, 0.16)
+        var border := Color(base.r, base.g, base.b, 0.40)
+        var n := int(ceil(rng / gs))
+        var ci := int(floor(ux / gs))
+        var cj := int(floor(uy / gs))
+        var sz := _scan_cell_screen_size(Vector2((ci + 0.5) * gs, (cj + 0.5) * gs), gs, bounds)
+        for di in range(-n, n + 1):
+            for dj in range(-n, n + 1):
+                var cx := (float(ci + di) + 0.5) * gs
+                var cy := (float(cj + dj) + 0.5) * gs
+                var p := _world_to_screen(Vector2(cx, cy), bounds)
+                if not _map_rect.has_point(p):
+                    continue
+                var cell := Rect2(p - sz * 0.5, sz)
+                draw_rect(cell, fill, true)
+                draw_rect(cell, border, false, 1.0)
+    _text("탐색 범위(그리드)", _map_rect.position + Vector2(18, _map_rect.size.y - 22), 10, MUTED, _map_rect.size.x - 36)
+
+func _draw_detected_cells(_r: Rect2) -> void:
+    # Cells holding a currently-detected enemy pulse in pastel red (detection -> combat).
+    var dets: Array = _state.get("detections", [])
+    if dets.is_empty():
+        return
+    var bounds: Array = _state.get("terrain", {}).get("bounds", _bounds_from_units(_state.get("units", [])))
+    var gs := _effective_grid_size()
+    if gs <= 0.0:
+        return
+    var t := float(Time.get_ticks_msec()) / 1000.0
+    var pulse := 0.5 + 0.5 * sin(t * TAU * 1.5)        # ~1.5 Hz blink
+    var a := 0.20 + 0.45 * pulse
+    var col := Color(1.0, 0.55, 0.55, a)               # pastel red
+    var edge := Color(1.0, 0.45, 0.45, min(1.0, a + 0.25))
+    # Only blink for enemies spotted by a TANK (matches the tank-only scan grids).
+    var kind_by_id := {}
+    for u in _state.get("units", []):
+        kind_by_id[str(u.get("id", ""))] = str(u.get("kind", ""))
+    var drawn := {}
+    for det in dets:
+        if str(kind_by_id.get(str(det.get("detector_id", "")), "")) != "tank":
+            continue
+        var tx := float(det.get("x", 0.0))
+        var ty := float(det.get("y", 0.0))
+        var ci := int(floor(tx / gs))
+        var cj := int(floor(ty / gs))
+        var key := "%d_%d" % [ci, cj]
+        if drawn.has(key):
+            continue
+        drawn[key] = true
+        var center := Vector2((float(ci) + 0.5) * gs, (float(cj) + 0.5) * gs)
+        var p := _world_to_screen(center, bounds)
+        if not _map_rect.has_point(p):
+            continue
+        var sz := _scan_cell_screen_size(center, gs, bounds)
+        var cell := Rect2(p - sz * 0.5, sz)
+        draw_rect(cell, col, true)
+        draw_rect(cell, edge, false, 1.5)
 
 func _draw_units() -> void:
     if not _state.has("units"):
@@ -2418,6 +2548,9 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _input(event: InputEvent) -> void:
+    # While the grid-size text box has focus, let it consume typing (don't fire hotkeys).
+    if _grid_size_input and _grid_size_input.has_focus() and event is InputEventKey:
+        return
     if event is InputEventKey:
         if _handle_file_dialog_key(event):
             get_viewport().set_input_as_handled()
@@ -2941,6 +3074,9 @@ func _handle_action(action: String) -> void:
             key = action.substr(6, action.length() - 10)
         if direction != 0 and key != "":
             _change_parameter(key, direction)
+    elif action == "toggle_detection_ranges":
+        _show_detection_ranges = not _show_detection_ranges
+        _status = "탐색 범위 표시: %s" % ("ON" if _show_detection_ranges else "OFF")
     elif action == "step":
         _status = "진행 요청 - +%0.0f초" % STEP_SECONDS
         BackendClient.step(STEP_SECONDS, 1)

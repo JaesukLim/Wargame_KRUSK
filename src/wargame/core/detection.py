@@ -84,8 +84,9 @@ def detect_unit_targets(
         "terrain_modifiers",
         {"plain": 1.0, "hill": 0.9, "mountain": 0.75, "water": 0.9},
     )
-    altitude_mod = detection_config.get("altitude_modifiers", {"low": 0.8, "mid": 0.9, "high": 1.0})
-    base_probability = float(detection_config.get("base_probability", 0.8))
+    altitude_mod = detection_config.get("altitude_modifiers", {"low": 1.0, "mid": 0.9, "high": 0.8})
+    base_by_kind = detection_config.get("base_probability_by_kind", {})
+    base_default = float(detection_config.get("base_probability", 0.86))
     range_decay_power = float(detection_config.get("range_decay_power", 1.0))
     blocked_los_factor = float(detection_config.get("blocked_los_factor", 0.35))
     fire_event_bonus_value = float(detection_config.get("fire_event_bonus", 0.15))
@@ -95,6 +96,11 @@ def detect_unit_targets(
 
     out: Dict[tuple[str, str], DetectionRecord] = {}
     for observer in unit_list:
+        # Only tanks (기갑) and recon (정찰) scan. Artillery fires on relayed
+        # recon intel through HQ; command posts are relay nodes — neither detects.
+        if not (observer.is_tank or observer.is_recon):
+            continue
+        base_probability = float(base_by_kind.get(observer.kind.value, base_default))
         for target in unit_list:
             if observer.id == target.id or observer.side == target.side:
                 continue

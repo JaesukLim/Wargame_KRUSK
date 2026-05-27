@@ -92,6 +92,7 @@ class BattleField:
         self.contact_history: Dict[Tuple[str, str], List[Tuple[float, float, float]]] = {}
         self.fire_missions: Dict[str, Dict[str, Any]] = {}
         self.pending_fire_orders: List[PendingFireOrder] = []
+        self.last_detections: Dict[Tuple[str, str], DetectionRecord] = {}
         self._logged_detections: Dict[Tuple[str, str], float] = {}
         self._logged_relays: Dict[Tuple[str, str, str], float] = {}
         self._last_replay_sample_s = -1.0
@@ -346,6 +347,7 @@ class BattleField:
             rng=self.rng,
         )
         self._log_detections(detections)
+        self.last_detections = detections
         return detections
 
     def _resolve_contacts(self, detections: Dict[tuple[str, str], DetectionRecord], dt: float) -> None:
@@ -1119,6 +1121,22 @@ class BattleField:
             "units": units,
             "shells": shells,
             "fire_missions": fire_missions,
+            "detection_grid_cell_size_m": float(
+                self.config.get("simulation", "detection", "grid_cell_size_m", default=250.0)
+            ),
+            "detections": [
+                {
+                    "detector_id": det_id,
+                    "target_id": tgt_id,
+                    "x": tgt.position.x,
+                    "y": tgt.position.y,
+                    "detector_side": (det.side.value if det else None),
+                    "confidence": rec.confidence,
+                }
+                for (det_id, tgt_id), rec in self.last_detections.items()
+                if (tgt := self.units.get(tgt_id)) is not None
+                for det in [self.units.get(det_id)]
+            ],
             "summary": {
                 "active_units": summary.active_units,
                 "red_strength": summary.red_strength,
