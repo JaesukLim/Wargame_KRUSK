@@ -83,8 +83,21 @@ def build_battlefield_from_config(cfg: SimulationConfig) -> BattleField:
 
     route_seed = int(cfg.get("simulation", "random_seed", default=19430712))
     route_rng = random.Random(route_seed)
+
+    auto_assign_tank_routes = bool(
+        cfg.get("simulation", "scenario", "auto_assign_tank_routes", default=True)
+    )
+
     for unit in units:
-        if unit.kind == UnitKind.TANK:
+        if unit.kind != UnitKind.TANK:
+            continue
+
+        # If the scenario file already provides a path, preserve it.
+        # This is required for historical scenarios where unit routes are part of the scenario.
+        has_scenario_path = bool(unit.movement_path.waypoints)
+
+        # Only generate a synthetic route when the scenario does not provide one.
+        if auto_assign_tank_routes and not has_scenario_path:
             _assign_team_route(unit, route_rng)
 
     bf.seed_units(units)

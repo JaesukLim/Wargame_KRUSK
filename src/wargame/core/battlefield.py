@@ -26,6 +26,25 @@ class EngagementPair:
     last_range_m: float = 0.0
     terrain_factors: Tuple[float, float] = (1.0, 1.0)
 
+@dataclass
+class PendingFireOrder:
+    arrival_time: float
+    artillery_id: str
+    target_id: str
+    target_name: str
+    target_pos: Point
+    detector_id: str
+    detector_name: str
+    hq_id: str | None
+    hq_name: str | None
+    confidence: float
+    reported_distance_m: float
+    line_of_sight: bool
+    terrain_factor: float
+    altitude_factor: float
+    range_factor: float
+    fire_event_bonus: float
+    assigned_from_detection_time: float
 
 @dataclass
 class SimulationResult:
@@ -72,6 +91,7 @@ class BattleField:
         self.replay_frames: List[Dict[str, Any]] = []
         self.contact_history: Dict[Tuple[str, str], List[Tuple[float, float, float]]] = {}
         self.fire_missions: Dict[str, Dict[str, Any]] = {}
+        self.pending_fire_orders: List[PendingFireOrder] = []
         self._logged_detections: Dict[Tuple[str, str], float] = {}
         self._logged_relays: Dict[Tuple[str, str, str], float] = {}
         self._last_replay_sample_s = -1.0
@@ -196,6 +216,7 @@ class BattleField:
         self.contacts.clear()
         self.contact_history.clear()
         self.fire_missions.clear()
+        self.pending_fire_orders.clear()
         self._logged_detections.clear()
         self._logged_relays.clear()
         self.log_event("load", f"Runtime unit set replaced: {len(units)} units")
@@ -450,7 +471,8 @@ class BattleField:
         if not artillery_units or not tanks:
             return
 
-        self._assign_wta_fire_missions(artillery_units, tanks, detections)
+        self._assign_wta_fire_orders(artillery_units, tanks, detections)
+        self._activate_due_fire_orders()
 
         for ar in artillery_units:
             if ar.reload_timer > 0:
@@ -483,62 +505,85 @@ class BattleField:
             rate = ar.fire_rate_per_min or 2.0
             ar.reload_timer = max(0.0, 60.0 / rate)
 
-    def _assign_wta_fire_missions(
+    def _assign_wta_fire_orders(
         self,
         artillery_units: List[Unit],
         tanks: List[Unit],
         detections: Dict[tuple[str, str], DetectionRecord],
     ) -> None:
-        """Task artillery from recon reports through command posts.
+        """Create delayed fire orders from recon reports through command posts.
 
-        Artillery does not scan for targets here. Recon/scout units produce a
-        report, an eligible HQ relays it, and the HQ assigns a greedy WTA fire
-        mission to an artillery unit in range.
+        Artillery does not receive a mission immediately after detection.
+        A recon report must first travel through the command chain, represented
+        here by a configurable command delay.
         """
+
+        command_delay_s = self._command_delay_s()
 
         for ar in artillery_units:
             if ar.shell_range_m is None:
                 continue
+
+            # Avoid stacking multiple pending orders for the same artillery unit.
+            if any(order.artillery_id == ar.id for order in self.pending_fire_orders):
+                continue
+
             candidates: List[Tuple[float, Unit, DetectionRecord, Unit, Optional[Unit]]] = []
+
             for target in tanks:
                 if target.side == ar.side:
                     continue
+
                 report = self._best_commanded_detection_report(ar, target.id, detections, recon_only=True)
                 if report is None:
                     continue
+
                 rec, detector, hq = report
                 target_pos = target.position
+
                 if self._dist(ar.position, target_pos) > ar.shell_range_m:
                     continue
+
                 target_value = target.strength / max(target.max_strength, 1.0)
                 score = rec.confidence * (0.65 + target_value) / max(self._dist(ar.position, target_pos), 1.0)
                 candidates.append((score, target, rec, detector, hq))
+
             if not candidates:
                 continue
+
             _, target, rec, detector, hq = max(candidates, key=lambda item: item[0])
+
             current = self.fire_missions.get(ar.id)
             if current and current.get("target_id") == target.id and self.time_s - float(current.get("assigned_at", 0.0)) < 45.0:
                 continue
-            self.fire_missions[ar.id] = {
-                "target_id": target.id,
-                "target_name": target.name,
-                "target_pos": target.position,
-                "detector_id": detector.id,
-                "detector_name": detector.name,
-                "hq_id": hq.id if hq is not None else None,
-                "hq_name": hq.name if hq is not None else None,
-                "confidence": rec.confidence,
-                "reported_distance_m": rec.distance_m,
-                "line_of_sight": rec.line_of_sight,
-                "terrain_factor": rec.terrain_factor,
-                "altitude_factor": rec.altitude_factor,
-                "range_factor": rec.range_factor,
-                "fire_event_bonus": rec.fire_event_bonus,
-                "assigned_at": self.time_s,
-            }
+
+            arrival_time = self.time_s + command_delay_s
+
+            self.pending_fire_orders.append(
+                PendingFireOrder(
+                    arrival_time=arrival_time,
+                    artillery_id=ar.id,
+                    target_id=target.id,
+                    target_name=target.name,
+                    target_pos=target.position,
+                    detector_id=detector.id,
+                    detector_name=detector.name,
+                    hq_id=hq.id if hq is not None else None,
+                    hq_name=hq.name if hq is not None else None,
+                    confidence=rec.confidence,
+                    reported_distance_m=rec.distance_m,
+                    line_of_sight=rec.line_of_sight,
+                    terrain_factor=rec.terrain_factor,
+                    altitude_factor=rec.altitude_factor,
+                    range_factor=rec.range_factor,
+                    fire_event_bonus=rec.fire_event_bonus,
+                    assigned_from_detection_time=self.time_s,
+                )
+            )
+
             self.log_event(
-                "artillery_target",
-                f"{hq.name if hq else 'Command net'} assigned {ar.name} WTA fire mission on {target.name} from {detector.name} report",
+                "fire_order_pending",
+                f"{detector.name} report queued for {ar.name}; fire order will arrive in {command_delay_s:.1f}s",
                 unit_id=ar.id,
                 target_id=target.id,
                 side=ar.side,
@@ -547,10 +592,83 @@ class BattleField:
                     "detector_id": detector.id,
                     "hq_id": hq.id if hq is not None else None,
                     "target_pos": target.position.as_tuple(),
+                    "arrival_time": arrival_time,
+                    "command_delay_s": command_delay_s,
                     "wta": True,
                 },
             )
 
+    def _activate_due_fire_orders(self) -> None:
+        """Promote delayed fire orders into active artillery fire missions."""
+
+        remaining_orders: List[PendingFireOrder] = []
+
+        for order in self.pending_fire_orders:
+            if self.time_s < order.arrival_time:
+                remaining_orders.append(order)
+                continue
+
+            ar = self.units.get(order.artillery_id)
+            target = self.units.get(order.target_id)
+
+            if ar is None or target is None:
+                continue
+            if not ar.is_alive() or not target.is_alive() or target.side == ar.side:
+                continue
+            if ar.shell_range_m is None or self._dist(ar.position, order.target_pos) > ar.shell_range_m:
+                continue
+
+            self.fire_missions[ar.id] = {
+                "target_id": order.target_id,
+                "target_name": order.target_name,
+                "target_pos": order.target_pos,
+                "detector_id": order.detector_id,
+                "detector_name": order.detector_name,
+                "hq_id": order.hq_id,
+                "hq_name": order.hq_name,
+                "confidence": order.confidence,
+                "reported_distance_m": order.reported_distance_m,
+                "line_of_sight": order.line_of_sight,
+                "terrain_factor": order.terrain_factor,
+                "altitude_factor": order.altitude_factor,
+                "range_factor": order.range_factor,
+                "fire_event_bonus": order.fire_event_bonus,
+                "assigned_at": self.time_s,
+                "order_created_at": order.assigned_from_detection_time,
+                "order_arrived_at": self.time_s,
+            }
+
+            self.log_event(
+                "artillery_target",
+                f"{order.hq_name if order.hq_name else 'Command net'} assigned {ar.name} delayed WTA fire mission on {target.name} from {order.detector_name} report",
+                unit_id=ar.id,
+                target_id=target.id,
+                side=ar.side,
+                data={
+                    "confidence": order.confidence,
+                    "detector_id": order.detector_id,
+                    "hq_id": order.hq_id,
+                    "target_pos": order.target_pos.as_tuple(),
+                    "command_delay_s": self.time_s - order.assigned_from_detection_time,
+                    "wta": True,
+                },
+            )
+
+        self.pending_fire_orders = remaining_orders
+
+
+
+
+    def _command_delay_s(self) -> float:
+        command_cfg = self.config.get("simulation", "command", default={})
+        return (
+            float(command_cfg.get("observer_to_hq_delay_s", 0.0))
+            + float(command_cfg.get("hq_processing_delay_s", 0.0))
+            + float(command_cfg.get("hq_to_artillery_delay_s", 0.0))
+            + float(command_cfg.get("artillery_order_processing_delay_s", 0.0))
+        )
+    
+    
     def _fire_artillery(self, launcher: Unit, target: Unit, detection: DetectionRecord, *, target_pos: Point | None = None) -> None:
         if launcher.ammo_remaining is not None and launcher.ammo_remaining <= 0:
             return

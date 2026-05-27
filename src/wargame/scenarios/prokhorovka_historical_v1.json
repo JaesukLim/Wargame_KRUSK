@@ -1,0 +1,1766 @@
+{
+  "name": "prokhorovka_historical_v1",
+  "description": "Semi-automated historical-style scenario generated from prokhorovka_default.json. Initial unit positions are preserved. Tank and recon movement paths are regenerated from a multi-point front-line contour based on the 1943-07-12 Prokhorovka situation map.",
+  "terrain": {
+    "csv": "DEM_data_1/prokhorovka_geographic_data_100m.csv",
+    "cell_size_m": 100
+  },
+  "unit_scale": {
+    "tank_unit": "company",
+    "artillery_unit": "regiment",
+    "strength": "vehicle/gun count used as aggregate combat power"
+  },
+  "units": [
+    {
+      "name": "B-TK-1A",
+      "side": "blue",
+      "kind": "tank",
+      "type": "Tiger_I",
+      "position": [
+        4500.0,
+        5500.0
+      ],
+      "strength": 12,
+      "max_strength": 12,
+      "path": [
+        [
+          5341.4,
+          6844.0
+        ],
+        [
+          6117.9,
+          8376.0
+        ]
+      ],
+      "speed_mps": 7.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.05,
+      "armor": 1.25
+    },
+    {
+      "name": "B-TK-1B",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIII",
+      "position": [
+        3700.0,
+        5500.0
+      ],
+      "strength": 16,
+      "max_strength": 16,
+      "path": [
+        [
+          5208.9,
+          7114.4
+        ],
+        [
+          6909.1,
+          8799.4
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-2A",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIII",
+      "position": [
+        3000.0,
+        5500.0
+      ],
+      "strength": 16,
+      "max_strength": 16,
+      "path": [
+        [
+          3748.8,
+          6672.3
+        ],
+        [
+          4594.2,
+          7919.8
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-2E",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIII",
+      "position": [
+        3700.0,
+        3100.0
+      ],
+      "strength": 16,
+      "max_strength": 16,
+      "path": [
+        [
+          4287.8,
+          5385.5
+        ],
+        [
+          4601.6,
+          7921.9
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-1C",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        4500.0,
+        4700.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          5689.8,
+          6536.5
+        ],
+        [
+          6705.0,
+          8677.9
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-1D",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        3700.0,
+        4700.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          5132.1,
+          6686.4
+        ],
+        [
+          6811.3,
+          8739.9
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-1E",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        4500.0,
+        3900.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          5852.8,
+          6198.9
+        ],
+        [
+          6990.9,
+          8854.0
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-2B",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        3000.0,
+        4700.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          4006.8,
+          6367.5
+        ],
+        [
+          5215.2,
+          8097.2
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-2C",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        3700.0,
+        3900.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          5052.5,
+          6000.4
+        ],
+        [
+          6258.2,
+          8422.7
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-2D",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        3000.0,
+        3900.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          4042.0,
+          5930.3
+        ],
+        [
+          5226.4,
+          8100.4
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-3A",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        2300.0,
+        4700.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          2582.7,
+          5990.5
+        ],
+        [
+          3082.1,
+          7331.1
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-3B",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        2300.0,
+        3900.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          3097.8,
+          5864.0
+        ],
+        [
+          4281.7,
+          7830.5
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-3C",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        3000.0,
+        3100.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          3094.1,
+          5186.5
+        ],
+        [
+          3299.4,
+          7439.7
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "B-TK-3D",
+      "side": "blue",
+      "kind": "tank",
+      "type": "PzIV",
+      "position": [
+        2300.0,
+        3100.0
+      ],
+      "strength": 14,
+      "max_strength": 14,
+      "path": [
+        [
+          2836.4,
+          5276.3
+        ],
+        [
+          3591.2,
+          7584.0
+        ]
+      ],
+      "speed_mps": 9.5,
+      "detection_range_m": 1850,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0
+    },
+    {
+      "name": "R-TK-1A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        9200.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          7896.7,
+          11850.0
+        ],
+        [
+          6315.0,
+          8735.0
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-1B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        10000.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          8445.1,
+          11833.4
+        ],
+        [
+          6473.7,
+          8787.9
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-1C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        10800.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9232.2,
+          12008.1
+        ],
+        [
+          7236.9,
+          9171.5
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-1D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        11600.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9144.1,
+          11773.1
+        ],
+        [
+          6238.5,
+          8709.5
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-1E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        12400.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9630.2,
+          12002.4
+        ],
+        [
+          6729.9,
+          8875.7
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-1F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        13200.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          10295.4,
+          11991.7
+        ],
+        [
+          7045.7,
+          9060.0
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-2A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        5800.0,
+        14500.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          5891.7,
+          11676.3
+        ],
+        [
+          5930.9,
+          8616.0
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-2B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        6600.0,
+        14500.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          6083.7,
+          11689.2
+        ],
+        [
+          5878.1,
+          8600.9
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-2C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        7400.0,
+        14500.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          6582.0,
+          11612.6
+        ],
+        [
+          5586.8,
+          8517.7
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-2D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        5800.0,
+        13700.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          5423.1,
+          11144.0
+        ],
+        [
+          5063.6,
+          8368.2
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-2E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        6600.0,
+        13700.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          5817.2,
+          11112.0
+        ],
+        [
+          4914.5,
+          8325.6
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-2F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        7400.0,
+        13700.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          6035.8,
+          11139.3
+        ],
+        [
+          4740.4,
+          8275.8
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-3A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        2500.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          3349.9,
+          11592.3
+        ],
+        [
+          4374.3,
+          8146.5
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-3B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        3300.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          3553.1,
+          11538.3
+        ],
+        [
+          4044.3,
+          8028.7
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-3C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        4100.0,
+        14800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          3885.5,
+          11423.1
+        ],
+        [
+          3529.8,
+          7774.9
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-3D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        2500.0,
+        14000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          3015.7,
+          11054.6
+        ],
+        [
+          3807.9,
+          7913.9
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-3E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        3300.0,
+        14000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          3782.8,
+          11172.7
+        ],
+        [
+          4243.4,
+          8099.8
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-3F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        4100.0,
+        14000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          3997.2,
+          11061.4
+        ],
+        [
+          3751.3,
+          7885.6
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-4A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        9200.0,
+        13800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9219.8,
+          11674.7
+        ],
+        [
+          8991.8,
+          9384.1
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-4B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        10000.0,
+        13800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9090.1,
+          11853.1
+        ],
+        [
+          8435.7,
+          9620.0
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-4C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        10800.0,
+        13800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9515.7,
+          11818.6
+        ],
+        [
+          8208.5,
+          9620.0
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-4D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        11600.0,
+        13800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          10106.4,
+          11820.2
+        ],
+        [
+          8715.7,
+          9522.2
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-4E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        12400.0,
+        13800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          10899.6,
+          11607.9
+        ],
+        [
+          9225.9,
+          9267.1
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-4F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        13200.0,
+        13800.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          11105.5,
+          11645.6
+        ],
+        [
+          8584.6,
+          9587.7
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-5A",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        10000.0,
+        13000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9503.6,
+          11286.9
+        ],
+        [
+          8676.5,
+          9541.8
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-5B",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-70",
+      "position": [
+        10800.0,
+        13000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9347.5,
+          11315.6
+        ],
+        [
+          7753.2,
+          9508.8
+        ]
+      ],
+      "speed_mps": 11.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.7
+    },
+    {
+      "name": "R-TK-5C",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        11600.0,
+        13000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          9819.3,
+          11408.5
+        ],
+        [
+          7949.8,
+          9620.0
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-5D",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        12400.0,
+        13000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          10612.3,
+          11341.0
+        ],
+        [
+          8678.2,
+          9540.9
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-5E",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        13200.0,
+        13000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          10624.1,
+          11257.0
+        ],
+        [
+          7746.5,
+          9504.3
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-5F",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        12200.0,
+        12000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          10017.0,
+          10697.5
+        ],
+        [
+          7588.6,
+          9399.1
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-4G",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        9200.0,
+        13000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          8970.0,
+          11312.6
+        ],
+        [
+          8810.7,
+          9474.6
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "R-TK-5G",
+      "side": "red",
+      "kind": "tank",
+      "type": "T-34",
+      "position": [
+        13000.0,
+        12000.0
+      ],
+      "strength": 25,
+      "max_strength": 25,
+      "path": [
+        [
+          11038.4,
+          10835.1
+        ],
+        [
+          9065.8,
+          9347.1
+        ]
+      ],
+      "speed_mps": 10.5,
+      "detection_range_m": 2450,
+      "command_range_m": 3500,
+      "lanchester_range_m": 1800,
+      "morale": 0.95,
+      "armor": 0.95
+    },
+    {
+      "name": "B-ART-1",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "position": [
+        1200.0,
+        5500.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.2,
+      "shell_damage": 1.6,
+      "shell_range_m": 8200,
+      "shell_speed_mps": 300,
+      "shell_dispersion_m": 180,
+      "ammo_limit": 80
+    },
+    {
+      "name": "B-ART-2",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "position": [
+        800.0,
+        4500.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.2,
+      "shell_damage": 1.6,
+      "shell_range_m": 8200,
+      "shell_speed_mps": 300,
+      "shell_dispersion_m": 180,
+      "ammo_limit": 80
+    },
+    {
+      "name": "B-ART-3",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "position": [
+        1200.0,
+        3500.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.2,
+      "shell_damage": 1.6,
+      "shell_range_m": 8200,
+      "shell_speed_mps": 300,
+      "shell_dispersion_m": 180,
+      "ammo_limit": 80
+    },
+    {
+      "name": "B-ART-4",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "position": [
+        800.0,
+        2500.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.2,
+      "shell_damage": 1.6,
+      "shell_range_m": 8200,
+      "shell_speed_mps": 300,
+      "shell_dispersion_m": 180,
+      "ammo_limit": 80
+    },
+    {
+      "name": "B-ART-5",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "position": [
+        1500.0,
+        1800.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.2,
+      "shell_damage": 1.6,
+      "shell_range_m": 8200,
+      "shell_speed_mps": 300,
+      "shell_dispersion_m": 180,
+      "ammo_limit": 80
+    },
+    {
+      "name": "B-ART-6",
+      "side": "blue",
+      "kind": "artillery",
+      "type": "leFH18",
+      "position": [
+        500.0,
+        1500.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.2,
+      "shell_damage": 1.6,
+      "shell_range_m": 8200,
+      "shell_speed_mps": 300,
+      "shell_dispersion_m": 180,
+      "ammo_limit": 80
+    },
+    {
+      "name": "R-ART-1",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "position": [
+        2500.0,
+        16000.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.0,
+      "shell_damage": 1.9,
+      "shell_range_m": 8500,
+      "shell_speed_mps": 330,
+      "shell_dispersion_m": 210,
+      "ammo_limit": 90
+    },
+    {
+      "name": "R-ART-2",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "position": [
+        6500.0,
+        16000.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.0,
+      "shell_damage": 1.9,
+      "shell_range_m": 8500,
+      "shell_speed_mps": 330,
+      "shell_dispersion_m": 210,
+      "ammo_limit": 90
+    },
+    {
+      "name": "R-ART-3",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "position": [
+        11000.0,
+        16000.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.0,
+      "shell_damage": 1.9,
+      "shell_range_m": 8500,
+      "shell_speed_mps": 330,
+      "shell_dispersion_m": 210,
+      "ammo_limit": 90
+    },
+    {
+      "name": "R-ART-4",
+      "side": "red",
+      "kind": "artillery",
+      "type": "M-30",
+      "position": [
+        12800.0,
+        11000.0
+      ],
+      "strength": 40,
+      "max_strength": 40,
+      "path": [],
+      "speed_mps": 2.0,
+      "detection_range_m": 1600,
+      "command_range_m": 6500,
+      "lanchester_range_m": 1800,
+      "morale": 1.0,
+      "armor": 1.0,
+      "fire_rate_per_min": 1.0,
+      "shell_damage": 1.9,
+      "shell_range_m": 8500,
+      "shell_speed_mps": 330,
+      "shell_dispersion_m": 210,
+      "ammo_limit": 90
+    },
+    {
+      "name": "B-REC-SSPz",
+      "side": "blue",
+      "kind": "recon",
+      "type": "Aufklaerung",
+      "position": [
+        5500.0,
+        6500.0
+      ],
+      "strength": 8,
+      "max_strength": 8,
+      "path": [
+        [
+          5961.8,
+          7242.7
+        ],
+        [
+          6224.2,
+          8151.6
+        ]
+      ],
+      "speed_mps": 13.0,
+      "detection_range_m": 6500,
+      "command_range_m": 10000,
+      "lanchester_range_m": 0,
+      "morale": 1.05,
+      "armor": 0.35
+    },
+    {
+      "name": "R-REC-5GTA",
+      "side": "red",
+      "kind": "recon",
+      "type": "Razvedka",
+      "position": [
+        8000.0,
+        11500.0
+      ],
+      "strength": 8,
+      "max_strength": 8,
+      "path": [
+        [
+          8236.9,
+          10832.9
+        ],
+        [
+          8267.0,
+          10068.0
+        ]
+      ],
+      "speed_mps": 13.0,
+      "detection_range_m": 6800,
+      "command_range_m": 10000,
+      "lanchester_range_m": 0,
+      "morale": 1.05,
+      "armor": 0.35
+    },
+    {
+      "name": "B-HQ-SSPz",
+      "side": "blue",
+      "kind": "command",
+      "type": "HQ",
+      "position": [
+        600.0,
+        900.0
+      ],
+      "strength": 30,
+      "max_strength": 30,
+      "path": [],
+      "speed_mps": 4.0,
+      "detection_range_m": 900,
+      "command_range_m": 12500,
+      "lanchester_range_m": 0,
+      "morale": 1.1,
+      "armor": 0.6
+    },
+    {
+      "name": "R-HQ-5GTA",
+      "side": "red",
+      "kind": "command",
+      "type": "HQ",
+      "position": [
+        13500.0,
+        16500.0
+      ],
+      "strength": 30,
+      "max_strength": 30,
+      "path": [],
+      "speed_mps": 4.0,
+      "detection_range_m": 900,
+      "command_range_m": 12500,
+      "lanchester_range_m": 0,
+      "morale": 1.1,
+      "armor": 0.6
+    }
+  ],
+  "_generation_note": {
+    "generator": "scripts/generate_historical_v1.py",
+    "path_policy": "preserve initial positions; regenerate tank/recon paths from front-line ranges; keep artillery/HQ stationary",
+    "changed_paths": 48,
+    "stationary_units": 12,
+    "unchanged_units": 0,
+    "frontline_points": [
+      [
+        2600.0,
+        7200.0
+      ],
+      [
+        3200.0,
+        7500.0
+      ],
+      [
+        3800.0,
+        7800.0
+      ],
+      [
+        4500.0,
+        8050.0
+      ],
+      [
+        5200.0,
+        8250.0
+      ],
+      [
+        5900.0,
+        8450.0
+      ],
+      [
+        6500.0,
+        8650.0
+      ],
+      [
+        7100.0,
+        9000.0
+      ],
+      [
+        7700.0,
+        9400.0
+      ],
+      [
+        8300.0,
+        9400.0
+      ],
+      [
+        8900.0,
+        9100.0
+      ],
+      [
+        9500.0,
+        8800.0
+      ]
+    ],
+    "group_frontline_ranges": {
+      "B-TK-1": [
+        5,
+        8
+      ],
+      "B-TK-2": [
+        3,
+        6
+      ],
+      "B-TK-3": [
+        1,
+        4
+      ],
+      "R-TK-3": [
+        1,
+        4
+      ],
+      "R-TK-2": [
+        3,
+        6
+      ],
+      "R-TK-1": [
+        5,
+        8
+      ],
+      "R-TK-4": [
+        8,
+        11
+      ],
+      "R-TK-5": [
+        7,
+        10
+      ],
+      "B-REC": [
+        5,
+        7
+      ],
+      "R-REC": [
+        6,
+        8
+      ]
+    },
+    "side_target_offset": {
+      "blue": [
+        -220.0,
+        -220.0
+      ],
+      "red": [
+        220.0,
+        220.0
+      ]
+    },
+    "recon_target_extra_offset": {
+      "blue": [
+        -350.0,
+        -450.0
+      ],
+      "red": [
+        350.0,
+        450.0
+      ]
+    }
+  }
+}
