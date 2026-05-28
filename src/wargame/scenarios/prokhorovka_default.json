@@ -1,6 +1,6 @@
 {
   "name": "Prokhorovka default - company/regiment unit scale",
-  "description": "Initial deployment derived from the provided Prokhorovka slide. Tank companies and artillery regiments are modelled as units, not platforms.",
+  "description": "Operational Prokhorovka sequence: recon and artillery are active at H-hour, first-wave tanks are present/targetable but movement-locked for the opening fire plan, and Soviet reserve waves arrive later to model echeloned commitment.",
   "terrain": {
     "csv": "DEM_data_1/prokhorovka_geographic_data_100m.csv",
     "cell_size_m": 100
@@ -17,27 +17,45 @@
       "kind": "tank",
       "type": "Tiger_I",
       "position": [
-        4500.0,
-        5500.0
+        1750,
+        4200
       ],
-      "strength": 12,
-      "max_strength": 12,
+      "strength": 14,
+      "max_strength": 14,
       "path": [
         [
-          5800.0,
-          7000.0
+          2200,
+          5400
         ],
         [
-          7000.0,
-          8500.0
+          2650,
+          6800
+        ],
+        [
+          3250,
+          8300
+        ],
+        [
+          4050,
+          10200
         ]
       ],
-      "speed_mps": 7.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.05,
-      "armor": 1.25
+      "lanchester_range_m": 2500,
+      "morale": 1.22,
+      "armor": 2.15,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-1B",
@@ -45,27 +63,45 @@
       "kind": "tank",
       "type": "PzIII",
       "position": [
-        3700.0,
-        5500.0
+        2450,
+        4750
       ],
       "strength": 16,
       "max_strength": 16,
       "path": [
         [
-          5400.0,
-          7000.0
+          2550,
+          5600
         ],
         [
-          6800.0,
-          8500.0
+          3000,
+          7050
+        ],
+        [
+          3650,
+          8550
+        ],
+        [
+          4450,
+          10400
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.55,
       "detection_range_m": 1850,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
-      "morale": 0.95,
-      "armor": 1.0
+      "morale": 1.03,
+      "armor": 1.05,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-2A",
@@ -73,27 +109,45 @@
       "kind": "tank",
       "type": "PzIII",
       "position": [
-        3000.0,
-        5500.0
+        5900,
+        3300
       ],
       "strength": 16,
       "max_strength": 16,
       "path": [
         [
-          4800.0,
-          7000.0
+          6900,
+          6250
         ],
         [
-          6600.0,
-          8500.0
+          8200,
+          8450
+        ],
+        [
+          9550,
+          10800
+        ],
+        [
+          11100,
+          13600
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.55,
       "detection_range_m": 1850,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
-      "morale": 0.95,
-      "armor": 1.0
+      "morale": 1.03,
+      "armor": 1.05,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-2E",
@@ -101,27 +155,45 @@
       "kind": "tank",
       "type": "PzIII",
       "position": [
-        3700.0,
-        3100.0
+        6620,
+        3730
       ],
       "strength": 16,
       "max_strength": 16,
       "path": [
         [
-          5400.0,
-          5500.0
+          7145,
+          6396
         ],
         [
-          6800.0,
-          8200.0
+          8445,
+          8596
+        ],
+        [
+          9795,
+          10946
+        ],
+        [
+          11345,
+          13746
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.55,
       "detection_range_m": 1850,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
-      "morale": 0.95,
-      "armor": 1.0
+      "morale": 1.03,
+      "armor": 1.05,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-1C",
@@ -129,27 +201,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        4500.0,
-        4700.0
+        1350,
+        4650
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          5800.0,
-          6500.0
+          1900,
+          5450
         ],
         [
-          7000.0,
-          8400.0
+          2400,
+          6900
+        ],
+        [
+          2950,
+          8350
+        ],
+        [
+          3750,
+          10150
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-1D",
@@ -157,27 +247,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        3700.0,
-        4700.0
+        3150,
+        4050
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          5400.0,
-          6500.0
+          2900,
+          5350
         ],
         [
-          6800.0,
-          8400.0
+          3350,
+          6750
+        ],
+        [
+          3950,
+          8150
+        ],
+        [
+          4750,
+          9950
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-1E",
@@ -185,27 +293,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        4500.0,
-        3900.0
+        2050,
+        3550
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          5800.0,
-          6000.0
+          2050,
+          5100
         ],
         [
-          7000.0,
-          8300.0
+          2500,
+          6500
+        ],
+        [
+          3050,
+          7900
+        ],
+        [
+          3850,
+          9700
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-2B",
@@ -213,27 +339,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        3000.0,
-        4700.0
+        5140,
+        3680
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          4800.0,
-          6500.0
+          6642,
+          6379
         ],
         [
-          6600.0,
-          8400.0
+          7942,
+          8579
+        ],
+        [
+          9292,
+          10929
+        ],
+        [
+          10842,
+          13729
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-2C",
@@ -241,27 +385,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        3700.0,
-        3900.0
+        7020,
+        2990
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          5400.0,
-          6000.0
+          7281,
+          6145
         ],
         [
-          6800.0,
-          8300.0
+          8581,
+          8345
+        ],
+        [
+          9931,
+          10695
+        ],
+        [
+          11481,
+          13495
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-2D",
@@ -269,27 +431,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        3000.0,
-        3900.0
+        4740,
+        2880
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          4800.0,
-          6000.0
+          6506,
+          6107
         ],
         [
-          6600.0,
-          8300.0
+          7806,
+          8307
+        ],
+        [
+          9156,
+          10657
+        ],
+        [
+          10706,
+          13457
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-3A",
@@ -297,27 +477,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        2300.0,
-        4700.0
+        9250,
+        2350
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          4200.0,
-          6500.0
+          10050,
+          5350
         ],
         [
-          6400.0,
-          8400.0
+          11350,
+          7700
+        ],
+        [
+          12600,
+          10150
+        ],
+        [
+          13750,
+          12950
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-3B",
@@ -325,27 +523,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        2300.0,
-        3900.0
+        9970,
+        2780
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          4200.0,
-          6000.0
+          10295,
+          5496
         ],
         [
-          6400.0,
-          8300.0
+          11595,
+          7846
+        ],
+        [
+          12845,
+          10296
+        ],
+        [
+          13900,
+          13096
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-3C",
@@ -353,27 +569,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        3000.0,
-        3100.0
+        8490,
+        2730
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          4800.0,
-          5500.0
+          9792,
+          5479
         ],
         [
-          6600.0,
-          8200.0
+          11092,
+          7829
+        ],
+        [
+          12342,
+          10279
+        ],
+        [
+          13492,
+          13079
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-TK-3D",
@@ -381,27 +615,45 @@
       "kind": "tank",
       "type": "PzIV",
       "position": [
-        2300.0,
-        3100.0
+        10370,
+        2040
       ],
-      "strength": 14,
-      "max_strength": 14,
+      "strength": 15,
+      "max_strength": 15,
       "path": [
         [
-          4200.0,
-          5500.0
+          10431,
+          5245
         ],
         [
-          6400.0,
-          8200.0
+          11731,
+          7595
+        ],
+        [
+          12981,
+          10045
+        ],
+        [
+          13900,
+          12845
         ]
       ],
-      "speed_mps": 9.5,
+      "speed_mps": 0.48,
       "detection_range_m": 1850,
       "command_range_m": 3500,
-      "lanchester_range_m": 1800,
-      "morale": 1.0,
-      "armor": 1.0
+      "lanchester_range_m": 2050,
+      "morale": 1.08,
+      "armor": 1.25,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_hold",
+      "activation_label": "H+6h ?? ?? ??/??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-1A",
@@ -409,27 +661,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        9200.0,
-        14800.0
+        10050,
+        14350
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          8600.0,
-          12000.0
+          9100,
+          11600
         ],
         [
-          7600.0,
-          9700.0
+          7850,
+          8800
+        ],
+        [
+          6500,
+          6250
+        ],
+        [
+          5050,
+          4000
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-1B",
@@ -437,27 +707,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        10000.0,
-        14800.0
+        10770,
+        14780
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          9000.0,
-          12000.0
+          9345,
+          11746
         ],
         [
-          7800.0,
-          9700.0
+          8095,
+          8946
+        ],
+        [
+          6745,
+          6396
+        ],
+        [
+          5295,
+          4146
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-1C",
@@ -465,27 +753,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        10800.0,
-        14800.0
+        9290,
+        14730
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          9400.0,
-          12000.0
+          8842,
+          11729
         ],
         [
-          8000.0,
-          9700.0
+          7592,
+          8929
+        ],
+        [
+          6242,
+          6379
+        ],
+        [
+          4792,
+          4129
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-1D",
@@ -493,27 +799,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        11600.0,
-        14800.0
+        12850,
+        13200
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10000.0,
-          12000.0
+          11900,
+          10350
         ],
         [
-          8400.0,
-          9800.0
+          10800,
+          7700
+        ],
+        [
+          9750,
+          5250
+        ],
+        [
+          8700,
+          2750
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-1E",
@@ -521,27 +845,45 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        12400.0,
-        14800.0
+        13570,
+        13630
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10600.0,
-          12000.0
+          12145,
+          10496
         ],
         [
-          8800.0,
-          9900.0
+          11045,
+          7846
+        ],
+        [
+          9995,
+          5396
+        ],
+        [
+          8945,
+          2896
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-1F",
@@ -549,27 +891,45 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        13200.0,
-        14800.0
+        12090,
+        13580
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          11200.0,
-          12000.0
+          11642,
+          10479
         ],
         [
-          9200.0,
-          10000.0
+          10542,
+          7829
+        ],
+        [
+          9492,
+          5379
+        ],
+        [
+          8442,
+          2879
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-2A",
@@ -577,27 +937,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        5800.0,
-        14500.0
+        4550,
+        10150
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          6200.0,
-          12000.0
+          4050,
+          9000
         ],
         [
-          6900.0,
-          9700.0
+          3250,
+          7700
+        ],
+        [
+          2550,
+          6400
+        ],
+        [
+          1900,
+          5350
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-2B",
@@ -605,27 +983,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        6600.0,
-        14500.0
+        5250,
+        10650
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          6800.0,
-          12000.0
+          4500,
+          9250
         ],
         [
-          7000.0,
-          9600.0
+          3650,
+          7900
+        ],
+        [
+          2850,
+          6550
+        ],
+        [
+          2200,
+          5450
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-2C",
@@ -633,27 +1029,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        7400.0,
-        14500.0
+        3950,
+        10850
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          7400.0,
-          12000.0
+          3700,
+          9150
         ],
         [
-          7200.0,
-          9600.0
+          3000,
+          7800
+        ],
+        [
+          2300,
+          6450
+        ],
+        [
+          1650,
+          5350
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-2D",
@@ -661,27 +1075,45 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        5800.0,
-        13700.0
+        5950,
+        10050
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          6200.0,
-          11500.0
+          4850,
+          8950
         ],
         [
-          6900.0,
-          9700.0
+          3950,
+          7650
+        ],
+        [
+          3100,
+          6350
+        ],
+        [
+          2450,
+          5250
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-2E",
@@ -689,27 +1121,45 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        6600.0,
-        13700.0
+        3500,
+        9900
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          6800.0,
-          11500.0
+          3450,
+          8750
         ],
         [
-          7000.0,
-          9600.0
+          2800,
+          7500
+        ],
+        [
+          2100,
+          6250
+        ],
+        [
+          1450,
+          5200
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-2F",
@@ -717,27 +1167,45 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        7400.0,
-        13700.0
+        4850,
+        9400
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          7400.0,
-          11500.0
+          4200,
+          8600
         ],
         [
-          7200.0,
-          9600.0
+          3400,
+          7350
+        ],
+        [
+          2650,
+          6100
+        ],
+        [
+          2050,
+          5050
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 21600.0,
+      "engage_after_s": 21600.0,
+      "activation_phase": "first_wave_three_axes",
+      "activation_label": "H+6h ?? 3? ? ?? ?? ??",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-TK-3A",
@@ -745,27 +1213,50 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        2500.0,
-        14800.0
+        3650,
+        15150
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          4500.0,
-          12000.0
+          4050,
+          11100
         ],
         [
-          6500.0,
-          9800.0
+          3250,
+          8450
+        ],
+        [
+          2450,
+          6650
+        ],
+        [
+          1800,
+          5450
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-3B",
@@ -773,27 +1264,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        3300.0,
-        14800.0
+        4550,
+        15650
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          4500.0,
-          12000.0
+          4450,
+          11250
         ],
         [
-          6500.0,
-          9800.0
+          3600,
+          8600
+        ],
+        [
+          2800,
+          6800
+        ],
+        [
+          2150,
+          5550
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-3C",
@@ -801,27 +1315,50 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        4100.0,
-        14800.0
+        5400,
+        15100
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          5000.0,
-          12000.0
+          4900,
+          11050
         ],
         [
-          6800.0,
-          9800.0
+          3950,
+          8400
+        ],
+        [
+          3050,
+          6600
+        ],
+        [
+          2400,
+          5400
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-3D",
@@ -829,27 +1366,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        2500.0,
-        14000.0
+        3150,
+        14350
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          4500.0,
-          11500.0
+          3650,
+          10850
         ],
         [
-          6500.0,
-          9800.0
+          2950,
+          8250
+        ],
+        [
+          2250,
+          6500
+        ],
+        [
+          1600,
+          5300
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-3E",
@@ -857,27 +1417,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        3300.0,
-        14000.0
+        6100,
+        14650
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          4800.0,
-          11500.0
+          5150,
+          10750
         ],
         [
-          6700.0,
-          9800.0
+          4100,
+          8150
+        ],
+        [
+          3150,
+          6400
+        ],
+        [
+          2500,
+          5200
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-3F",
@@ -885,27 +1468,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        4100.0,
-        14000.0
+        4700,
+        13950
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          5000.0,
-          11500.0
+          4300,
+          10600
         ],
         [
-          6800.0,
-          9800.0
+          3500,
+          8000
+        ],
+        [
+          2700,
+          6250
+        ],
+        [
+          2050,
+          5100
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4A",
@@ -913,27 +1519,50 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        9200.0,
-        13800.0
+        9250,
+        16100
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          8600.0,
-          11500.0
+          9200,
+          11900
         ],
         [
-          7600.0,
-          9700.0
+          7950,
+          9150
+        ],
+        [
+          6600,
+          6500
+        ],
+        [
+          5150,
+          4200
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4B",
@@ -941,27 +1570,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        10000.0,
-        13800.0
+        9970,
+        16530
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          9000.0,
-          11500.0
+          9445,
+          12046
         ],
         [
-          7800.0,
-          9700.0
+          8195,
+          9296
+        ],
+        [
+          6845,
+          6646
+        ],
+        [
+          5395,
+          4346
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4C",
@@ -969,27 +1621,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        10800.0,
-        13800.0
+        8490,
+        16480
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          9400.0,
-          11500.0
+          8942,
+          12029
         ],
         [
-          8000.0,
-          9700.0
+          7692,
+          9279
+        ],
+        [
+          6342,
+          6629
+        ],
+        [
+          4892,
+          4329
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4D",
@@ -997,27 +1672,50 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        11600.0,
-        13800.0
+        10370,
+        15790
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10000.0,
-          11500.0
+          9581,
+          11795
         ],
         [
-          8400.0,
-          9800.0
+          8331,
+          9045
+        ],
+        [
+          6981,
+          6395
+        ],
+        [
+          5531,
+          4095
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4E",
@@ -1025,27 +1723,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        12400.0,
-        13800.0
+        8090,
+        15680
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10600.0,
-          11500.0
+          8806,
+          11757
         ],
         [
-          8800.0,
-          9900.0
+          7556,
+          9007
+        ],
+        [
+          6206,
+          6357
+        ],
+        [
+          4756,
+          4057
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4F",
@@ -1053,27 +1774,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        13200.0,
-        13800.0
+        9600,
+        15240
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          11200.0,
-          11500.0
+          9319,
+          11608
         ],
         [
-          9200.0,
-          10000.0
+          8069,
+          8858
+        ],
+        [
+          6719,
+          6208
+        ],
+        [
+          5269,
+          3908
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5A",
@@ -1081,27 +1825,50 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        10000.0,
-        13000.0
+        12550,
+        15350
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          9000.0,
-          11000.0
+          11950,
+          11100
         ],
         [
-          7800.0,
-          9700.0
+          10850,
+          8200
+        ],
+        [
+          9800,
+          5600
+        ],
+        [
+          8650,
+          3000
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5B",
@@ -1109,27 +1876,50 @@
       "kind": "tank",
       "type": "T-70",
       "position": [
-        10800.0,
-        13000.0
+        13270,
+        15780
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          9400.0,
-          11000.0
+          12195,
+          11246
         ],
         [
-          8000.0,
-          9700.0
+          11095,
+          8346
+        ],
+        [
+          10045,
+          5746
+        ],
+        [
+          8895,
+          3146
         ]
       ],
-      "speed_mps": 11.5,
+      "speed_mps": 0.6,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.7
+      "armor": 0.7,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5C",
@@ -1137,27 +1927,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        11600.0,
-        13000.0
+        11790,
+        15730
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10000.0,
-          11000.0
+          11692,
+          11229
         ],
         [
-          8400.0,
-          9800.0
+          10592,
+          8329
+        ],
+        [
+          9542,
+          5729
+        ],
+        [
+          8392,
+          3129
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5D",
@@ -1165,27 +1978,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        12400.0,
-        13000.0
+        13670,
+        15040
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10600.0,
-          11000.0
+          12331,
+          10995
         ],
         [
-          8800.0,
-          9900.0
+          11231,
+          8095
+        ],
+        [
+          10181,
+          5495
+        ],
+        [
+          9031,
+          2895
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5E",
@@ -1193,27 +2029,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        13200.0,
-        13000.0
+        11390,
+        14930
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          11200.0,
-          11000.0
+          11556,
+          10957
         ],
         [
-          9200.0,
-          10000.0
+          10456,
+          8057
+        ],
+        [
+          9406,
+          5457
+        ],
+        [
+          8256,
+          2857
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5F",
@@ -1221,27 +2080,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        12200.0,
-        12000.0
+        12900,
+        14490
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          10800.0,
-          10500.0
+          12069,
+          10808
         ],
         [
-          9000.0,
-          9900.0
+          10969,
+          7908
+        ],
+        [
+          9919,
+          5308
+        ],
+        [
+          8769,
+          2708
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-4G",
@@ -1249,27 +2131,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        9200.0,
-        13000.0
+        10700,
+        16710
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          8600.0,
-          11000.0
+          9693,
+          12107
         ],
         [
-          7600.0,
-          9700.0
+          8443,
+          9357
+        ],
+        [
+          7093,
+          6707
+        ],
+        [
+          5643,
+          4407
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "R-TK-5G",
@@ -1277,27 +2182,50 @@
       "kind": "tank",
       "type": "T-34",
       "position": [
-        13000.0,
-        12000.0
+        13900,
+        15960
       ],
       "strength": 25,
       "max_strength": 25,
       "path": [
         [
-          11400.0,
-          10500.0
+          12443,
+          11307
         ],
         [
-          9400.0,
-          10000.0
+          11343,
+          8407
+        ],
+        [
+          10293,
+          5807
+        ],
+        [
+          9143,
+          3207
         ]
       ],
-      "speed_mps": 10.5,
+      "speed_mps": 0.52,
       "detection_range_m": 2450,
       "command_range_m": 3500,
       "lanchester_range_m": 1800,
       "morale": 0.95,
-      "armor": 0.95
+      "armor": 0.95,
+      "active_after_s": 999999.0,
+      "present_after_s": 999999.0,
+      "detectable_after_s": 999999.0,
+      "targetable_after_s": 999999.0,
+      "maneuver_after_s": 999999.0,
+      "engage_after_s": 999999.0,
+      "activation_phase": "conditional_reserve",
+      "activation_label": "Red ?? ?? 30% ? ?? ??",
+      "visible_before_activation": true,
+      "reserve_trigger_side": "red",
+      "reserve_trigger_kind": "tank",
+      "reserve_trigger_loss_ratio": 0.3,
+      "reserve_triggered": false,
+      "reserve_triggered_at_s": null,
+      "echelon": "I"
     },
     {
       "name": "B-ART-1",
@@ -1305,8 +2233,8 @@
       "kind": "artillery",
       "type": "leFH18",
       "position": [
-        1200.0,
-        5500.0
+        900,
+        4350
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1319,10 +2247,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.2,
       "shell_damage": 1.6,
-      "shell_range_m": 8200,
+      "shell_range_m": 14000,
       "shell_speed_mps": 300,
       "shell_dispersion_m": 180,
-      "ammo_limit": 80
+      "ammo_limit": 80,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "B-ART-2",
@@ -1330,8 +2268,8 @@
       "kind": "artillery",
       "type": "leFH18",
       "position": [
-        800.0,
-        4500.0
+        1650,
+        3550
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1344,10 +2282,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.2,
       "shell_damage": 1.6,
-      "shell_range_m": 8200,
+      "shell_range_m": 14000,
       "shell_speed_mps": 300,
       "shell_dispersion_m": 180,
-      "ammo_limit": 80
+      "ammo_limit": 80,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "B-ART-3",
@@ -1355,8 +2303,8 @@
       "kind": "artillery",
       "type": "leFH18",
       "position": [
-        1200.0,
-        3500.0
+        850,
+        2600
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1369,10 +2317,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.2,
       "shell_damage": 1.6,
-      "shell_range_m": 8200,
+      "shell_range_m": 14000,
       "shell_speed_mps": 300,
       "shell_dispersion_m": 180,
-      "ammo_limit": 80
+      "ammo_limit": 80,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "B-ART-4",
@@ -1380,8 +2338,8 @@
       "kind": "artillery",
       "type": "leFH18",
       "position": [
-        800.0,
-        2500.0
+        2450,
+        2700
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1394,10 +2352,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.2,
       "shell_damage": 1.6,
-      "shell_range_m": 8200,
+      "shell_range_m": 14000,
       "shell_speed_mps": 300,
       "shell_dispersion_m": 180,
-      "ammo_limit": 80
+      "ammo_limit": 80,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "B-ART-5",
@@ -1405,8 +2373,8 @@
       "kind": "artillery",
       "type": "leFH18",
       "position": [
-        1500.0,
-        1800.0
+        1150,
+        1350
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1419,10 +2387,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.2,
       "shell_damage": 1.6,
-      "shell_range_m": 8200,
+      "shell_range_m": 14000,
       "shell_speed_mps": 300,
       "shell_dispersion_m": 180,
-      "ammo_limit": 80
+      "ammo_limit": 80,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "B-ART-6",
@@ -1430,8 +2408,8 @@
       "kind": "artillery",
       "type": "leFH18",
       "position": [
-        500.0,
-        1500.0
+        3000,
+        1100
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1444,10 +2422,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.2,
       "shell_damage": 1.6,
-      "shell_range_m": 8200,
+      "shell_range_m": 14000,
       "shell_speed_mps": 300,
       "shell_dispersion_m": 180,
-      "ammo_limit": 80
+      "ammo_limit": 80,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "R-ART-1",
@@ -1455,8 +2443,8 @@
       "kind": "artillery",
       "type": "M-30",
       "position": [
-        2500.0,
-        16000.0
+        5050,
+        15150
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1469,10 +2457,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.0,
       "shell_damage": 1.9,
-      "shell_range_m": 8500,
+      "shell_range_m": 14000,
       "shell_speed_mps": 330,
       "shell_dispersion_m": 210,
-      "ammo_limit": 90
+      "ammo_limit": 90,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "R-ART-2",
@@ -1480,8 +2478,8 @@
       "kind": "artillery",
       "type": "M-30",
       "position": [
-        6500.0,
-        16000.0
+        9100,
+        16350
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1494,10 +2492,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.0,
       "shell_damage": 1.9,
-      "shell_range_m": 8500,
+      "shell_range_m": 14000,
       "shell_speed_mps": 330,
       "shell_dispersion_m": 210,
-      "ammo_limit": 90
+      "ammo_limit": 90,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "R-ART-3",
@@ -1505,8 +2513,8 @@
       "kind": "artillery",
       "type": "M-30",
       "position": [
-        11000.0,
-        16000.0
+        11950,
+        15700
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1519,10 +2527,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.0,
       "shell_damage": 1.9,
-      "shell_range_m": 8500,
+      "shell_range_m": 14000,
       "shell_speed_mps": 330,
       "shell_dispersion_m": 210,
-      "ammo_limit": 90
+      "ammo_limit": 90,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "R-ART-4",
@@ -1530,8 +2548,8 @@
       "kind": "artillery",
       "type": "M-30",
       "position": [
-        12800.0,
-        11000.0
+        13300,
+        12700
       ],
       "strength": 40,
       "max_strength": 40,
@@ -1544,10 +2562,20 @@
       "armor": 1.0,
       "fire_rate_per_min": 1.0,
       "shell_damage": 1.9,
-      "shell_range_m": 8500,
+      "shell_range_m": 14000,
       "shell_speed_mps": 330,
       "shell_dispersion_m": 210,
-      "ammo_limit": 90
+      "ammo_limit": 90,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "fire_support_ready",
+      "activation_label": "H-hour artillery/HQ fire-support element",
+      "visible_before_activation": true,
+      "echelon": "III"
     },
     {
       "name": "B-REC-SSPz",
@@ -1555,27 +2583,45 @@
       "kind": "recon",
       "type": "Aufklaerung",
       "position": [
-        5500.0,
-        6500.0
+        2700,
+        5200
       ],
       "strength": 8,
       "max_strength": 8,
       "path": [
         [
-          6500.0,
-          7500.0
+          3050,
+          6100
         ],
         [
-          7200.0,
-          8500.0
+          3550,
+          7200
+        ],
+        [
+          4300,
+          8400
+        ],
+        [
+          5450,
+          9600
         ]
       ],
-      "speed_mps": 13.0,
-      "detection_range_m": 6500,
+      "speed_mps": 1.2,
+      "detection_range_m": 9000,
       "command_range_m": 10000,
       "lanchester_range_m": 0,
       "morale": 1.05,
-      "armor": 0.35
+      "armor": 0.35,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "recon_opening",
+      "activation_label": "?? ??/?? ????",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "R-REC-5GTA",
@@ -1583,27 +2629,45 @@
       "kind": "recon",
       "type": "Razvedka",
       "position": [
-        8000.0,
-        11500.0
+        10300,
+        11900
       ],
       "strength": 8,
       "max_strength": 8,
       "path": [
         [
-          7500.0,
-          10000.0
+          9300,
+          10850
         ],
         [
-          7200.0,
-          9500.0
+          7700,
+          9300
+        ],
+        [
+          5700,
+          7700
+        ],
+        [
+          3900,
+          6100
         ]
       ],
-      "speed_mps": 13.0,
-      "detection_range_m": 6800,
+      "speed_mps": 1.2,
+      "detection_range_m": 9000,
       "command_range_m": 10000,
       "lanchester_range_m": 0,
       "morale": 1.05,
-      "armor": 0.35
+      "armor": 0.35,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "recon_opening",
+      "activation_label": "?? ??/?? ????",
+      "visible_before_activation": true,
+      "echelon": "I"
     },
     {
       "name": "B-HQ-SSPz",
@@ -1611,8 +2675,8 @@
       "kind": "command",
       "type": "HQ",
       "position": [
-        600.0,
-        900.0
+        500,
+        760
       ],
       "strength": 30,
       "max_strength": 30,
@@ -1622,7 +2686,17 @@
       "command_range_m": 12500,
       "lanchester_range_m": 0,
       "morale": 1.1,
-      "armor": 0.6
+      "armor": 0.6,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "command_ready",
+      "activation_label": "H-hour headquarters and relay node",
+      "visible_before_activation": true,
+      "echelon": "XXX"
     },
     {
       "name": "R-HQ-5GTA",
@@ -1630,8 +2704,8 @@
       "kind": "command",
       "type": "HQ",
       "position": [
-        13500.0,
-        16500.0
+        13650,
+        16650
       ],
       "strength": 30,
       "max_strength": 30,
@@ -1641,7 +2715,27 @@
       "command_range_m": 12500,
       "lanchester_range_m": 0,
       "morale": 1.1,
-      "armor": 0.6
+      "armor": 0.6,
+      "active_after_s": 0.0,
+      "present_after_s": 0.0,
+      "detectable_after_s": 0.0,
+      "targetable_after_s": 0.0,
+      "maneuver_after_s": 0.0,
+      "engage_after_s": 0.0,
+      "activation_phase": "command_ready",
+      "activation_label": "H-hour headquarters and relay node",
+      "visible_before_activation": true,
+      "echelon": "XXXX"
     }
-  ]
+  ],
+  "timeline": {
+    "frames": 120,
+    "frame_interval_s": 726.0504201680673,
+    "expected_duration_s": 86400.0,
+    "integration_dt_s": 300.0,
+    "historical_label": "1 simulated day, 120 returned frames including initial frame"
+  },
+  "simulation": {
+    "layout_note": "West axis revised against orientation_2.png: west units now fight along the river-left Petrovka/Beregovoe-to-Olshanka corridor, without extreme map-edge outliers."
+  }
 }

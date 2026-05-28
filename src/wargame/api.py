@@ -7,8 +7,10 @@ Python so Godot can be the only presentation layer.
 
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 from threading import RLock
+from time import perf_counter
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
@@ -22,11 +24,28 @@ from .core.types import MovementPath, Point
 
 
 API_SCHEMA_VERSION = "2026-05-20.1"
+ECHELON_PATTERN = r"^(|I|II|III|X|XX|XXX|XXXX)$"
 
 
 class StepRequest(BaseModel):
     dt: float = Field(default=30.0, gt=0.0, le=600.0)
     steps: int = Field(default=1, ge=1, le=600)
+
+
+
+
+class ReplayGenerateRequest(BaseModel):
+    """Precompute a full replay locally in the backend without mutating live state."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    dt: float = Field(default=30.0, gt=0.0, le=600.0)
+    max_steps: int = Field(default=120, ge=1, le=2000)
+    sample_every_steps: int = Field(default=1, ge=1, le=60)
+    stop_on_terminal: bool = True
+    frame_interval_s: float | None = Field(default=None, gt=0.0, le=86400.0)
+    frames: int | None = Field(default=None, ge=1, le=2000)
+    integration_dt_s: float | None = Field(default=None, gt=0.0, le=3600.0)
 
 
 class ResetRequest(BaseModel):
@@ -60,6 +79,9 @@ class RuntimeParameters(BaseModel):
     artillery_delay_s: float = Field(default=240.0, ge=25.0, le=600.0)
     artillery_damage_scale: float = Field(default=1.0, ge=0.1, le=3.0)
     target_area_scale: float = Field(default=1.0, ge=0.25, le=4.0)
+    red_force_end_ratio: float = Field(default=0.50, ge=0.05, le=0.95)
+    blue_tank_end_count: float = Field(default=0.0, ge=0.0, le=20.0)
+    unit_removal_ratio: float = Field(default=0.20, ge=0.0, le=0.90)
 
 
 class RuntimeParameterPatch(BaseModel):
@@ -72,6 +94,9 @@ class RuntimeParameterPatch(BaseModel):
     artillery_delay_s: float | None = Field(default=None, ge=25.0, le=600.0)
     artillery_damage_scale: float | None = Field(default=None, ge=0.1, le=3.0)
     target_area_scale: float | None = Field(default=None, ge=0.25, le=4.0)
+    red_force_end_ratio: float | None = Field(default=None, ge=0.05, le=0.95)
+    blue_tank_end_count: float | None = Field(default=None, ge=0.0, le=20.0)
+    unit_removal_ratio: float | None = Field(default=None, ge=0.0, le=0.90)
 
 
 class LanchesterMatrixPatch(BaseModel):
@@ -102,12 +127,27 @@ class AddUnitRequest(BaseModel):
     armor: float = Field(default=1.0, ge=0.05, le=20.0)
     morale: float = Field(default=1.0, ge=0.05, le=2.0)
     color: str = Field(default="#ffffff", max_length=16)
+    echelon: str | None = Field(default=None, pattern=ECHELON_PATTERN)
     fire_rate_per_min: float | None = Field(default=None, ge=0.0, le=120.0)
     shell_damage: float | None = Field(default=None, ge=0.0, le=1000.0)
     shell_range_m: float | None = Field(default=None, ge=0.0, le=200000.0)
     shell_speed_mps: float | None = Field(default=None, ge=0.0, le=3000.0)
     shell_dispersion_m: float | None = Field(default=None, ge=0.0, le=5000.0)
     ammo_remaining: int | None = Field(default=None, ge=0, le=100000)
+    active_after_s: float | None = Field(default=None, ge=0.0)
+    present_after_s: float | None = Field(default=None, ge=0.0)
+    detectable_after_s: float | None = Field(default=None, ge=0.0)
+    targetable_after_s: float | None = Field(default=None, ge=0.0)
+    maneuver_after_s: float | None = Field(default=None, ge=0.0)
+    engage_after_s: float | None = Field(default=None, ge=0.0)
+    activation_phase: str | None = Field(default=None, max_length=64)
+    activation_label: str | None = Field(default=None, max_length=160)
+    visible_before_activation: bool | None = None
+    reserve_trigger_side: str | None = Field(default=None, max_length=16)
+    reserve_trigger_kind: str | None = Field(default=None, max_length=32)
+    reserve_trigger_loss_ratio: float | None = Field(default=None, ge=0.0, le=1.0)
+    reserve_triggered: bool | None = None
+    reserve_triggered_at_s: float | None = Field(default=None, ge=0.0)
 
 
 class StateLoadRequest(BaseModel):
@@ -142,6 +182,8 @@ class SimulationSession:
         self._scenario_path = config.scenario_path
         self._parameters = RuntimeParameters()
         self._battlefield = build_battlefield(self._config_path, self._scenario_path)
+        self._precomputed_replay_frames: list[dict[str, Any]] = []
+        self._precomputed_replay_meta: dict[str, Any] = {}
         self._apply_parameters()
 
     def _apply_parameters(self) -> None:
@@ -150,11 +192,15 @@ class SimulationSession:
     def reset(self, _request: ResetRequest | None = None) -> dict[str, Any]:
         with self._lock:
             self._battlefield = build_battlefield(self._config_path, self._scenario_path)
+            self._precomputed_replay_frames = []
+            self._precomputed_replay_meta = {}
             self._apply_parameters()
             return self.state()
 
     def step(self, request: StepRequest) -> dict[str, Any]:
         with self._lock:
+            self._precomputed_replay_frames = []
+            self._precomputed_replay_meta = {}
             for _ in range(request.steps):
                 if not self._battlefield.alive_units() or self._battlefield.is_terminal():
                     break
@@ -162,6 +208,100 @@ class SimulationSession:
                 if self._battlefield.is_terminal():
                     break
             return self.state()
+
+    def generate_replay(self, request: ReplayGenerateRequest) -> dict[str, Any]:
+        with self._lock:
+            start = perf_counter()
+            # Work on a clone so a replay can be generated without consuming the
+            # operator's live scenario state or camera workflow.
+            battlefield = deepcopy(self._battlefield)
+            frames: list[dict[str, Any]] = [battlefield.export_state(include_logs=False)]
+            steps_run = 0
+            new_replay = (
+                request.frame_interval_s is not None
+                or request.frames is not None
+                or request.integration_dt_s is not None
+                or not ({"dt", "max_steps", "sample_every_steps"} & request.model_fields_set)
+            )
+            if new_replay:
+                frame_interval_s = float(
+                    request.frame_interval_s
+                    or self._battlefield.config.get("simulation", "timeline", "frame_interval_s", default=3600.0)
+                )
+                frames_requested = int(
+                    request.frames
+                    or self._battlefield.config.get("simulation", "timeline", "frames", default=120)
+                )
+                integration_dt_s = min(
+                    float(
+                        request.integration_dt_s
+                        or self._battlefield.config.get("simulation", "timeline", "integration_dt_s", default=300.0)
+                    ),
+                    frame_interval_s,
+                )
+                for _ in range(max(0, frames_requested - 1)):
+                    if not battlefield.alive_units():
+                        break
+                    if request.stop_on_terminal and battlefield.is_terminal():
+                        break
+                    remaining = frame_interval_s
+                    while remaining > 1e-6:
+                        if not battlefield.alive_units():
+                            remaining = 0.0
+                            break
+                        if request.stop_on_terminal and battlefield.is_terminal():
+                            remaining = 0.0
+                            break
+                        step_dt = min(integration_dt_s, remaining)
+                        battlefield.update(step_dt)
+                        steps_run += 1
+                        remaining -= step_dt
+                    frames.append(battlefield.export_state(include_logs=False))
+                    if request.stop_on_terminal and battlefield.is_terminal():
+                        break
+            else:
+                frame_interval_s = request.dt * request.sample_every_steps
+                frames_requested = request.max_steps + 1
+                integration_dt_s = request.dt
+                for _step_index in range(request.max_steps):
+                    if not battlefield.alive_units():
+                        break
+                    if request.stop_on_terminal and battlefield.is_terminal():
+                        break
+                    battlefield.update(request.dt)
+                    steps_run += 1
+                    should_sample = steps_run % request.sample_every_steps == 0
+                    if should_sample or (request.stop_on_terminal and battlefield.is_terminal()):
+                        frames.append(battlefield.export_state(include_logs=False))
+                    if request.stop_on_terminal and battlefield.is_terminal():
+                        break
+            compute_ms = (perf_counter() - start) * 1000.0
+            meta = {
+                "precomputed": True,
+                "dt": request.dt,
+                "steps_run": steps_run,
+                "solver_steps_run": steps_run,
+                "frames": len(frames),
+                "frames_requested": frames_requested,
+                "frames_returned": len(frames),
+                "includes_initial_frame": True,
+                "frame_interval_s": frame_interval_s,
+                "integration_dt_s": integration_dt_s,
+                "compute_ms": compute_ms,
+                "ended": bool(frames[-1].get("summary", {}).get("ended", False)) if frames else False,
+                "end_reason": str(frames[-1].get("summary", {}).get("end_reason") or "") if frames else "",
+                "final_time_s": float(frames[-1].get("time_s", 0.0)) if frames else 0.0,
+                "sample_every_steps": request.sample_every_steps,
+            }
+            self._precomputed_replay_frames = frames
+            self._precomputed_replay_meta = meta
+            return {"replay_frames": frames, "metadata": meta}
+
+    def replay(self) -> dict[str, Any]:
+        with self._lock:
+            if self._precomputed_replay_frames:
+                return {"replay_frames": self._precomputed_replay_frames, "metadata": self._precomputed_replay_meta}
+            return {"replay_frames": self.state(include_logs=True).get("replay_frames", []), "metadata": {"precomputed": False}}
 
     def parameters(self) -> dict[str, Any]:
         values = self._parameters.model_dump()
@@ -175,6 +315,9 @@ class SimulationSession:
                 "artillery_delay_s": {"min": 25.0, "max": 600.0, "step": 15.0, "label": "Indirect-fire DES delay"},
                 "artillery_damage_scale": {"min": 0.1, "max": 3.0, "step": 0.1, "label": "Artillery damage scale"},
                 "target_area_scale": {"min": 0.25, "max": 4.0, "step": 0.25, "label": "Target area scale"},
+                "red_force_end_ratio": {"min": 0.05, "max": 0.95, "step": 0.05, "label": "Red force end ratio"},
+                "blue_tank_end_count": {"min": 0.0, "max": 20.0, "step": 1.0, "label": "Blue tank end count"},
+                "unit_removal_ratio": {"min": 0.0, "max": 0.90, "step": 0.05, "label": "Unit removal ratio"},
             },
         }
 
@@ -219,6 +362,8 @@ class SimulationSession:
         with self._lock:
             self._replace_units_from_state(request.state)
             self._battlefield.load_state(request.state)
+            self._precomputed_replay_frames = []
+            self._precomputed_replay_meta = {}
             return self.state()
 
     def dump_config(self) -> dict[str, Any]:
@@ -243,6 +388,8 @@ class SimulationSession:
             if request.state is not None:
                 self._replace_units_from_state(request.state)
                 self._battlefield.load_state(request.state)
+            self._precomputed_replay_frames = []
+            self._precomputed_replay_meta = {}
             return self.state()
 
     def lanchester_matrix(self) -> dict[str, Any]:
@@ -287,9 +434,29 @@ class SimulationSession:
                 "lanchester_range_m": item.get("lanchester_range_m", 0.0),
                 "armor": item.get("armor", 1.0),
                 "morale": item.get("morale", 1.0),
+                "echelon": item.get("echelon", item.get("echelon_label", "")),
                 "path": item.get("waypoints", []),
                 "ammo_remaining": item.get("ammo_remaining"),
             }
+            for key in (
+                "active_after_s",
+                "present_after_s",
+                "detectable_after_s",
+                "targetable_after_s",
+                "maneuver_after_s",
+                "engage_after_s",
+                "activation_phase",
+                "activation_label",
+                "visible_before_activation",
+                "reserve_trigger_side",
+                "reserve_trigger_kind",
+                "reserve_trigger_loss_ratio",
+                "reserve_triggered",
+                "reserve_triggered_at_s",
+                "echelon",
+            ):
+                if key in item:
+                    data[key] = item[key]
             unit = parse_unit_definition(data)
             if item.get("id"):
                 unit.id = str(item.get("id"))
@@ -385,7 +552,11 @@ def create_app(config: BackendConfig | None = None) -> FastAPI:
 
     @app.get("/state/replay")
     def get_replay() -> dict[str, Any]:
-        return {"replay_frames": session.state(include_logs=True).get("replay_frames", [])}
+        return session.replay()
+
+    @app.post("/state/replay/generate")
+    def generate_replay(request: ReplayGenerateRequest) -> dict[str, Any]:
+        return session.generate_replay(request)
 
     @app.get("/state/dump")
     def dump_state() -> dict[str, Any]:

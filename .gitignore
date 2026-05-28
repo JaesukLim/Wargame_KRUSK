@@ -15,3 +15,13 @@ dist/
 # QA / preview artifacts from terrain preprocessing
 DEM_data_1/*.preview.png
 DEM_data_1/*.summary.txt
+
+# Local agent / IDE / build caches
+.omx/
+.idea/
+build/
+*.spec
+.pytest_cache/
+.ruff_cache/
+.godot/
+Godot_*/

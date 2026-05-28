@@ -45,6 +45,13 @@ class PendingFireOrder:
     range_factor: float
     fire_event_bonus: float
     assigned_from_detection_time: float
+    detector_cell: tuple[int, int] | None = None
+    target_cell: tuple[int, int] | None = None
+    detector_cell_center: tuple[float, float] | None = None
+    target_cell_center: tuple[float, float] | None = None
+    grid_cell_size_m: float = 0.0
+    grid_distance_cells: float = 0.0
+    grid_metric: str = "chebyshev"
 
 @dataclass
 class SimulationResult:
@@ -82,7 +89,12 @@ class BattleField:
             "artillery_delay_s": 240.0,
             "artillery_damage_scale": 1.0,
             "target_area_scale": 1.0,
+            "red_force_end_ratio": 0.50,
+            "blue_tank_end_count": 0.0,
+            "unit_removal_ratio": 0.20,
         }
+        self._initial_strength_by_side: Dict[Side, float] = {Side.RED: 0.0, Side.BLUE: 0.0}
+        self._initial_nonreserve_strength_by_side_kind: Dict[Tuple[Side, UnitKind], float] = {}
         self.runtime_lanchester_matrix: Dict[str, Dict[str, float]] = self._base_lanchester_matrix()
         self.units: Dict[str, Unit] = {}
         self.shells: Dict[str, ShellImpact] = {}
@@ -95,6 +107,7 @@ class BattleField:
         self.last_detections: Dict[Tuple[str, str], DetectionRecord] = {}
         self._logged_detections: Dict[Tuple[str, str], float] = {}
         self._logged_relays: Dict[Tuple[str, str, str], float] = {}
+        self._reserve_activated_ids: set[str] = set()
         self._last_replay_sample_s = -1.0
         self.time_s = 0.0
         seed = int(self.config.get("simulation", "random_seed", default=19430712))
@@ -115,6 +128,9 @@ class BattleField:
                 "artillery_delay_s": float(parameters.get("artillery_delay_s", self.runtime_parameters["artillery_delay_s"])),
                 "artillery_damage_scale": float(parameters.get("artillery_damage_scale", self.runtime_parameters["artillery_damage_scale"])),
                 "target_area_scale": float(parameters.get("target_area_scale", self.runtime_parameters["target_area_scale"])),
+                "red_force_end_ratio": float(parameters.get("red_force_end_ratio", self.runtime_parameters["red_force_end_ratio"])),
+                "blue_tank_end_count": float(parameters.get("blue_tank_end_count", self.runtime_parameters["blue_tank_end_count"])),
+                "unit_removal_ratio": float(parameters.get("unit_removal_ratio", self.runtime_parameters["unit_removal_ratio"])),
             }
         )
         self.log_event("parameters", "Runtime model parameters updated", data=dict(self.runtime_parameters))
@@ -197,6 +213,12 @@ class BattleField:
     # -----------------------------
     def add_unit(self, unit: Unit) -> None:
         self.units[unit.id] = unit
+        self._initial_strength_by_side[unit.side] = self._initial_strength_by_side.get(unit.side, 0.0) + max(unit.max_strength, unit.strength, 0.0)
+        if unit.reserve_trigger_loss_ratio is None:
+            key = (unit.side, unit.kind)
+            self._initial_nonreserve_strength_by_side_kind[key] = self._initial_nonreserve_strength_by_side_kind.get(key, 0.0) + max(unit.max_strength, unit.strength, 0.0)
+        if unit.reserve_triggered:
+            self._reserve_activated_ids.add(unit.id)
         self.log_event(
             "unit_added",
             f"{unit.name} added to battlefield",
@@ -213,6 +235,14 @@ class BattleField:
 
     def replace_units(self, units: List[Unit]) -> None:
         self.units = {unit.id: unit for unit in units}
+        self._initial_strength_by_side = {Side.RED: 0.0, Side.BLUE: 0.0}
+        self._initial_nonreserve_strength_by_side_kind = {}
+        self._reserve_activated_ids = {unit.id for unit in units if unit.reserve_triggered}
+        for unit in units:
+            self._initial_strength_by_side[unit.side] = self._initial_strength_by_side.get(unit.side, 0.0) + max(unit.max_strength, unit.strength, 0.0)
+            if unit.reserve_trigger_loss_ratio is None:
+                key = (unit.side, unit.kind)
+                self._initial_nonreserve_strength_by_side_kind[key] = self._initial_nonreserve_strength_by_side_kind.get(key, 0.0) + max(unit.max_strength, unit.strength, 0.0)
         self.shells.clear()
         self.contacts.clear()
         self.contact_history.clear()
@@ -243,11 +273,19 @@ class BattleField:
         return True
 
     def remove_destroyed(self) -> None:
+        removal_ratio = max(0.0, min(1.0, float(self.runtime_parameters.get("unit_removal_ratio", 0.20))))
         for uid in list(self.units.keys()):
-            if not self.units[uid].is_alive():
-                unit = self.units[uid]
-                self.log_event("destroyed", f"{unit.name} defeated and removed from battle", unit_id=uid, side=unit.side)
-                self.remove_unit(uid, reason="destroyed")
+            unit = self.units[uid]
+            if not unit.is_alive() or unit.normalized_strength <= removal_ratio:
+                reason = "destroyed" if not unit.is_alive() else "combat_ineffective"
+                self.log_event(
+                    reason,
+                    f"{unit.name} removed from battle at {unit.normalized_strength:.0%} strength",
+                    unit_id=uid,
+                    side=unit.side,
+                    data={"remaining_ratio": unit.normalized_strength, "threshold": removal_ratio},
+                )
+                self.remove_unit(uid, reason=reason)
 
     def alive_units(self) -> List[Unit]:
         return [u for u in self.units.values() if u.is_alive()]
@@ -258,13 +296,24 @@ class BattleField:
     def terminal_status(self) -> Dict[str, Any]:
         red_tanks = len(self.alive_tanks_by_side(Side.RED))
         blue_tanks = len(self.alive_tanks_by_side(Side.BLUE))
-        if red_tanks <= 0 and blue_tanks <= 0:
-            return {"ended": True, "winner": "draw", "reason": "no_tanks", "red_tanks": red_tanks, "blue_tanks": blue_tanks}
-        if red_tanks <= 0:
-            return {"ended": True, "winner": "blue", "reason": "red_tanks_destroyed", "red_tanks": red_tanks, "blue_tanks": blue_tanks}
-        if blue_tanks <= 0:
-            return {"ended": True, "winner": "red", "reason": "blue_tanks_destroyed", "red_tanks": red_tanks, "blue_tanks": blue_tanks}
-        return {"ended": False, "winner": None, "reason": None, "red_tanks": red_tanks, "blue_tanks": blue_tanks}
+        red_strength = sum(u.strength for u in self.units.values() if u.side == Side.RED)
+        initial_red = max(self._initial_strength_by_side.get(Side.RED, 0.0), red_strength, 1.0)
+        red_end_ratio = max(0.0, min(1.0, float(self.runtime_parameters.get("red_force_end_ratio", 0.50))))
+        red_end_threshold = initial_red * red_end_ratio
+        blue_tank_end_count = max(0, int(round(float(self.runtime_parameters.get("blue_tank_end_count", 0.0)))))
+        base = {
+            "red_tanks": red_tanks,
+            "blue_tanks": blue_tanks,
+            "red_strength": red_strength,
+            "red_initial_strength": initial_red,
+            "red_force_end_threshold": red_end_threshold,
+            "blue_tank_end_count": blue_tank_end_count,
+        }
+        if red_strength <= red_end_threshold:
+            return {**base, "ended": True, "winner": "blue", "reason": "red_force_threshold"}
+        if blue_tanks <= blue_tank_end_count:
+            return {**base, "ended": True, "winner": "red", "reason": "blue_tanks_destroyed"}
+        return {**base, "ended": False, "winner": None, "reason": None}
 
     def is_terminal(self) -> bool:
         return bool(self.terminal_status()["ended"])
@@ -275,23 +324,104 @@ class BattleField:
     def update(self, dt: float) -> SimulationResult:
         self.time_s += dt
 
+        self._activate_conditional_reserves()
         self._move_units(dt)
         detections = self._resolve_detection()
         self._resolve_contacts(detections, dt)
         self._resolve_artillery(detections, dt)
         self._resolve_shell_impacts()
+        self._prune_old_shell_visuals()
 
         self.remove_destroyed()
         self._sample_replay()
         return self.snapshot()
+
+    def _shell_visual_window_s(self) -> float:
+        return max(
+            30.0,
+            float(self.config.get("simulation", "timeline", "frame_interval_s", default=0.0) or 0.0),
+        )
+
+    def _prune_old_shell_visuals(self) -> None:
+        visual_window_s = self._shell_visual_window_s()
+        self.shells = {
+            sid: shell
+            for sid, shell in self.shells.items()
+            if shell.is_enroute or not shell.landed or self.time_s - shell.impact_time <= visual_window_s
+        }
+
+    def _activate_conditional_reserves(self) -> None:
+        for unit in self.units.values():
+            trigger_ratio = unit.reserve_trigger_loss_ratio
+            if trigger_ratio is None or unit.reserve_triggered:
+                continue
+            side = self._side_from_string(unit.reserve_trigger_side) or unit.side
+            kind = self._kind_from_string(unit.reserve_trigger_kind) or unit.kind
+            loss_ratio = self._nonreserve_loss_ratio(side, kind)
+            if loss_ratio + 1e-9 < max(0.0, min(1.0, trigger_ratio)):
+                continue
+
+            unit.reserve_triggered = True
+            unit.reserve_triggered_at_s = self.time_s
+            self._reserve_activated_ids.add(unit.id)
+            unit.active_after_s = min(unit.active_after_s, self.time_s)
+            unit.present_after_s = min(unit.present_after_s, self.time_s)
+            unit.detectable_after_s = min(unit.detectable_after_s, self.time_s)
+            unit.targetable_after_s = min(unit.targetable_after_s, self.time_s)
+            unit.maneuver_after_s = min(unit.maneuver_after_s, self.time_s)
+            unit.engage_after_s = min(unit.engage_after_s, self.time_s)
+            self.log_event(
+                "reserve_activated",
+                f"{unit.name} reserve released after {side.value} {kind.value} losses reached {loss_ratio:.0%}",
+                unit_id=unit.id,
+                side=unit.side,
+                data={
+                    "trigger_side": side.value,
+                    "trigger_kind": kind.value,
+                    "loss_ratio": loss_ratio,
+                    "threshold": trigger_ratio,
+                },
+            )
+
+    def _side_from_string(self, value: str) -> Side | None:
+        value = value.lower().strip()
+        if value == Side.RED.value:
+            return Side.RED
+        if value == Side.BLUE.value:
+            return Side.BLUE
+        return None
+
+    def _kind_from_string(self, value: str) -> UnitKind | None:
+        value = value.lower().strip()
+        for kind in UnitKind:
+            if value == kind.value:
+                return kind
+        if value == "command_post":
+            return UnitKind.COMMAND
+        return None
+
+    def _nonreserve_loss_ratio(self, side: Side, kind: UnitKind) -> float:
+        initial = self._initial_nonreserve_strength_by_side_kind.get((side, kind), 0.0)
+        if initial <= 0.0:
+            return 0.0
+        current = sum(
+            unit.strength
+            for unit in self.units.values()
+            if unit.side == side
+            and unit.kind == kind
+            and unit.reserve_trigger_loss_ratio is None
+            and unit.is_alive()
+        )
+        return max(0.0, min(1.0, (initial - current) / initial))
 
     # -----------------------------
     # movement
     # -----------------------------
     def _move_units(self, dt: float) -> None:
         engaged_unit_ids = self._engaged_unit_ids()
+        gate_time = max(0.0, self.time_s - dt)
         for unit in self.units.values():
-            if not unit.is_alive():
+            if not unit.can_move_at(gate_time):
                 continue
             if unit.id in engaged_unit_ids:
                 # Units that have made direct-fire contact hold position until
@@ -361,14 +491,16 @@ class BattleField:
         active_pairs = set()
         for i, u_id in enumerate(ids):
             u = alive[u_id]
-            if not u.is_alive() or u.kind != UnitKind.TANK:
+            if not u.is_alive() or not u.can_be_damaged_at(self.time_s):
                 continue
 
             for v_id in ids[i + 1 :]:
                 v = alive[v_id]
-                if not v.is_alive() or v.kind != UnitKind.TANK:
+                if not v.is_alive() or not v.can_be_damaged_at(self.time_s):
                     continue
                 if u.side == v.side:
+                    continue
+                if not self._can_form_direct_fire_pair(u, v):
                     continue
 
                 d = self._dist(u.position, v.position)
@@ -388,11 +520,7 @@ class BattleField:
                 key = tuple(sorted((u_id, v_id)))
                 active_pairs.add(key)
 
-                k_uv = matrix.get(u.unit_type, {}).get(v.unit_type)
-                k_vu = matrix.get(v.unit_type, {}).get(u.unit_type)
-                if k_uv is None or k_vu is None:
-                    k_uv = float(self.config.get("simulation", "combat", "default_k_attacker", default=0.0025))
-                    k_vu = float(self.config.get("simulation", "combat", "default_k_defender", default=0.0025))
+                k_uv, k_vu = self._direct_fire_coefficients(u, v, matrix)
 
                 terrain_u = self._terrain_damping_at_position(u.position)
                 terrain_v = self._terrain_damping_at_position(v.position)
@@ -463,12 +591,52 @@ class BattleField:
                     self.log_event("engagement_end", f"{a.name} and {b.name} broke contact", unit_id=a.id, target_id=b.id, side=a.side)
                 self.contacts.pop(k)
 
+    def _can_form_direct_fire_pair(self, a: Unit, b: Unit) -> bool:
+        if a.kind == UnitKind.TANK and b.kind == UnitKind.TANK:
+            return a.can_engage_at(self.time_s) and b.can_engage_at(self.time_s)
+        if a.kind == UnitKind.TANK and b.kind == UnitKind.ARTILLERY:
+            return a.can_engage_at(self.time_s)
+        if a.kind == UnitKind.ARTILLERY and b.kind == UnitKind.TANK:
+            return b.can_engage_at(self.time_s)
+        return False
+
+    def _direct_fire_coefficients(
+        self,
+        attacker: Unit,
+        defender: Unit,
+        matrix: Dict[str, Dict[str, float]],
+    ) -> Tuple[float, float]:
+        default_attacker = float(self.config.get("simulation", "combat", "default_k_attacker", default=0.0025))
+        default_defender = float(self.config.get("simulation", "combat", "default_k_defender", default=0.0025))
+        k_ab = matrix.get(attacker.unit_type, {}).get(defender.unit_type)
+        k_ba = matrix.get(defender.unit_type, {}).get(attacker.unit_type)
+
+        if attacker.kind == UnitKind.TANK and defender.kind == UnitKind.TANK:
+            return (
+                default_attacker if k_ab is None else k_ab,
+                default_defender if k_ba is None else k_ba,
+            )
+
+        if attacker.kind == UnitKind.TANK and defender.kind == UnitKind.ARTILLERY:
+            return (
+                default_attacker * 1.35 if k_ab is None else k_ab,
+                (default_defender * 0.25 if defender.can_engage_at(self.time_s) else 0.0) if k_ba is None else k_ba,
+            )
+
+        if attacker.kind == UnitKind.ARTILLERY and defender.kind == UnitKind.TANK:
+            return (
+                (default_attacker * 0.25 if attacker.can_engage_at(self.time_s) else 0.0) if k_ab is None else k_ab,
+                default_defender * 1.35 if k_ba is None else k_ba,
+            )
+
+        return (0.0, 0.0)
+
     # -----------------------------
     # artillery
     # -----------------------------
     def _resolve_artillery(self, detections: Dict[tuple[str, str], DetectionRecord], dt: float) -> None:
-        artillery_units = [u for u in self.units.values() if u.is_artillery and u.is_alive()]
-        tanks = [u for u in self.units.values() if u.is_tank and u.is_alive()]
+        artillery_units = [u for u in self.units.values() if u.is_artillery and u.can_engage_at(self.time_s)]
+        tanks = [u for u in self.units.values() if u.is_tank and u.can_be_damaged_at(self.time_s)]
 
         if not artillery_units or not tanks:
             return
@@ -484,7 +652,7 @@ class BattleField:
             if mission is None:
                 continue
             target = self.units.get(str(mission.get("target_id", "")))
-            if target is None or not target.is_alive() or target.side == ar.side:
+            if target is None or not target.can_be_damaged_at(self.time_s) or target.side == ar.side:
                 self.fire_missions.pop(ar.id, None)
                 continue
             target_pos = mission.get("target_pos")
@@ -502,6 +670,13 @@ class BattleField:
                 altitude_factor=float(mission.get("altitude_factor", 1.0)),
                 range_factor=float(mission.get("range_factor", 1.0)),
                 fire_event_bonus=float(mission.get("fire_event_bonus", 0.0)),
+                detector_cell=self._tuple_int_pair(mission.get("detector_cell")),
+                target_cell=self._tuple_int_pair(mission.get("target_cell")),
+                detector_cell_center=self._tuple_float_pair(mission.get("detector_cell_center")),
+                target_cell_center=self._tuple_float_pair(mission.get("target_cell_center")),
+                grid_cell_size_m=float(mission.get("grid_cell_size_m", 0.0)),
+                grid_distance_cells=float(mission.get("grid_distance_cells", 0.0)),
+                grid_metric=str(mission.get("grid_metric", "chebyshev")),
             )
             self._fire_artillery(ar, target, rec, target_pos=target_pos)
             rate = ar.fire_rate_per_min or 2.0
@@ -541,7 +716,7 @@ class BattleField:
                     continue
 
                 rec, detector, hq = report
-                target_pos = target.position
+                target_pos = self._reported_target_point(rec, target)
 
                 if self._dist(ar.position, target_pos) > ar.shell_range_m:
                     continue
@@ -567,7 +742,7 @@ class BattleField:
                     artillery_id=ar.id,
                     target_id=target.id,
                     target_name=target.name,
-                    target_pos=target.position,
+                    target_pos=self._reported_target_point(rec, target),
                     detector_id=detector.id,
                     detector_name=detector.name,
                     hq_id=hq.id if hq is not None else None,
@@ -580,6 +755,13 @@ class BattleField:
                     range_factor=rec.range_factor,
                     fire_event_bonus=rec.fire_event_bonus,
                     assigned_from_detection_time=self.time_s,
+                    detector_cell=rec.detector_cell,
+                    target_cell=rec.target_cell,
+                    detector_cell_center=rec.detector_cell_center,
+                    target_cell_center=rec.target_cell_center,
+                    grid_cell_size_m=rec.grid_cell_size_m,
+                    grid_distance_cells=rec.grid_distance_cells,
+                    grid_metric=rec.grid_metric,
                 )
             )
 
@@ -593,7 +775,9 @@ class BattleField:
                     "confidence": rec.confidence,
                     "detector_id": detector.id,
                     "hq_id": hq.id if hq is not None else None,
-                    "target_pos": target.position.as_tuple(),
+                    "target_pos": self._reported_target_point(rec, target).as_tuple(),
+                    "target_cell": list(rec.target_cell) if rec.target_cell is not None else None,
+                    "detector_cell": list(rec.detector_cell) if rec.detector_cell is not None else None,
                     "arrival_time": arrival_time,
                     "command_delay_s": command_delay_s,
                     "wta": True,
@@ -615,7 +799,7 @@ class BattleField:
 
             if ar is None or target is None:
                 continue
-            if not ar.is_alive() or not target.is_alive() or target.side == ar.side:
+            if not ar.can_engage_at(self.time_s) or not target.can_be_damaged_at(self.time_s) or target.side == ar.side:
                 continue
             if ar.shell_range_m is None or self._dist(ar.position, order.target_pos) > ar.shell_range_m:
                 continue
@@ -635,6 +819,13 @@ class BattleField:
                 "altitude_factor": order.altitude_factor,
                 "range_factor": order.range_factor,
                 "fire_event_bonus": order.fire_event_bonus,
+                "detector_cell": list(order.detector_cell) if order.detector_cell is not None else None,
+                "target_cell": list(order.target_cell) if order.target_cell is not None else None,
+                "detector_cell_center": list(order.detector_cell_center) if order.detector_cell_center is not None else None,
+                "target_cell_center": list(order.target_cell_center) if order.target_cell_center is not None else None,
+                "grid_cell_size_m": order.grid_cell_size_m,
+                "grid_distance_cells": order.grid_distance_cells,
+                "grid_metric": order.grid_metric,
                 "assigned_at": self.time_s,
                 "order_created_at": order.assigned_from_detection_time,
                 "order_arrived_at": self.time_s,
@@ -651,6 +842,8 @@ class BattleField:
                     "detector_id": order.detector_id,
                     "hq_id": order.hq_id,
                     "target_pos": order.target_pos.as_tuple(),
+                    "target_cell": list(order.target_cell) if order.target_cell is not None else None,
+                    "detector_cell": list(order.detector_cell) if order.detector_cell is not None else None,
                     "command_delay_s": self.time_s - order.assigned_from_detection_time,
                     "wta": True,
                 },
@@ -705,6 +898,7 @@ class BattleField:
             impact_time=self.time_s + travel,
             accuracy=accuracy,
             radius_m=radius_m,
+            ballistic_travel_s=ballistic_travel,
         )
         self.shells[shell_id] = shell
         launcher.last_fired_at = self.time_s
@@ -720,6 +914,7 @@ class BattleField:
                 "damage": damage,
                 "radius_m": radius_m,
                 "travel_s": travel,
+                "ballistic_travel_s": ballistic_travel,
                 "artillery_delay_s": artillery_delay_s,
                 "target_area_scale": target_area_scale,
             },
@@ -742,7 +937,7 @@ class BattleField:
             affected: list[tuple[Unit, float, float]] = []
             radius = max(shell.radius_m, 1.0)
             for candidate in self.units.values():
-                if not candidate.is_alive() or candidate.side == launcher.side:
+                if not candidate.can_be_damaged_at(self.time_s) or candidate.side == launcher.side:
                     continue
                 distance_to_impact = self._dist(candidate.position, shell.target_pos)
                 if distance_to_impact > radius:
@@ -788,7 +983,7 @@ class BattleField:
         candidates = [
             unit
             for unit in self.units.values()
-            if unit.is_artillery and unit.is_alive() and unit.side != launcher.side and unit.shell_range_m
+            if unit.is_artillery and unit.can_engage_at(self.time_s) and unit.side != launcher.side and unit.shell_range_m
         ]
         if not candidates:
             return
@@ -830,6 +1025,24 @@ class BattleField:
         if cell.water:
             return float(terrain_mod.get("water", 0.0))
         return float(terrain_mod.get(cell.landform_name, 1.0))
+
+    def _reported_target_point(self, detection: DetectionRecord, target: Unit) -> Point:
+        """Return the cell-level target report consumed by artillery/WTA."""
+
+        center = detection.target_cell_center
+        if center is None:
+            return target.position
+        return Point(float(center[0]), float(center[1]))
+
+    def _tuple_int_pair(self, value: Any) -> tuple[int, int] | None:
+        if isinstance(value, (list, tuple)) and len(value) >= 2:
+            return (int(value[0]), int(value[1]))
+        return None
+
+    def _tuple_float_pair(self, value: Any) -> tuple[float, float] | None:
+        if isinstance(value, (list, tuple)) and len(value) >= 2:
+            return (float(value[0]), float(value[1]))
+        return None
 
     def _best_friendly_detection(
         self,
@@ -964,7 +1177,14 @@ class BattleField:
         red = sum(u.strength for u in self.units.values() if u.side == Side.RED)
         blue = sum(u.strength for u in self.units.values() if u.side == Side.BLUE)
         terminal = self.terminal_status()
-        expected_duration_s = float(self.config.get("simulation", "timeline", "expected_duration_s", default=3600.0))
+        expected_duration_s = float(
+            self.config.get(
+                "simulation",
+                "timeline",
+                "expected_duration_s",
+                default=self.config.get("simulation", "duration_seconds", default=3600.0),
+            )
+        )
         return SimulationResult(
             time_s=self.time_s,
             active_units=len(self.alive_units()),
@@ -1026,6 +1246,7 @@ class BattleField:
             "side": unit.side.value,
             "kind": "command_post" if unit.is_command else unit.kind.value,
             "type": unit.unit_type,
+            "echelon": unit.echelon,
             "strength": unit.strength,
             "max_strength": unit.max_strength,
             "normalized_strength": unit.normalized_strength,
@@ -1041,6 +1262,80 @@ class BattleField:
             "no_kill": round(max(unit.strength, 0.0), 3),
         }
 
+    def tank_counts_by_side_and_type(self) -> Dict[str, Dict[str, int]]:
+        counts: Dict[str, Dict[str, int]] = {Side.RED.value: {}, Side.BLUE.value: {}}
+        for unit in self.units.values():
+            if unit.is_alive() and unit.kind == UnitKind.TANK:
+                side_counts = counts.setdefault(unit.side.value, {})
+                side_counts[unit.unit_type] = side_counts.get(unit.unit_type, 0) + 1
+        return counts
+
+    def loss_exchange_payload(self) -> Dict[str, Any]:
+        initial_red = max(self._initial_strength_by_side.get(Side.RED, 0.0), 0.0)
+        initial_blue = max(self._initial_strength_by_side.get(Side.BLUE, 0.0), 0.0)
+        current_red = sum(unit.strength for unit in self.units.values() if unit.side == Side.RED and unit.is_alive())
+        current_blue = sum(unit.strength for unit in self.units.values() if unit.side == Side.BLUE and unit.is_alive())
+        red_losses = max(0.0, initial_red - current_red)
+        blue_losses = max(0.0, initial_blue - current_blue)
+        return {
+            "red_losses": red_losses,
+            "blue_losses": blue_losses,
+            "red_loss_ratio": red_losses / initial_red if initial_red > 0.0 else 0.0,
+            "blue_loss_ratio": blue_losses / initial_blue if initial_blue > 0.0 else 0.0,
+            "red_losses_per_blue_loss": red_losses / blue_losses if blue_losses > 1e-9 else None,
+            "blue_losses_per_red_loss": blue_losses / red_losses if red_losses > 1e-9 else None,
+        }
+
+    def reserve_status_payload(self) -> Dict[str, Any]:
+        pending = []
+        triggered = []
+        thresholds = []
+        pending_strength = 0.0
+        triggered_strength = 0.0
+        pending_strength_by_side: Dict[str, float] = {Side.RED.value: 0.0, Side.BLUE.value: 0.0}
+        triggered_strength_by_side: Dict[str, float] = {Side.RED.value: 0.0, Side.BLUE.value: 0.0}
+        activated_ids = set(self._reserve_activated_ids)
+        for unit in self.units.values():
+            if unit.reserve_trigger_loss_ratio is None:
+                continue
+            strength = max(unit.strength, 0.0)
+            item = {
+                "id": unit.id,
+                "name": unit.name,
+                "side": unit.side.value,
+                "strength": strength,
+                "max_strength": unit.max_strength,
+                "trigger_side": unit.reserve_trigger_side or unit.side.value,
+                "trigger_kind": unit.reserve_trigger_kind or unit.kind.value,
+                "threshold": unit.reserve_trigger_loss_ratio,
+                "triggered": unit.reserve_triggered,
+                "triggered_at_s": unit.reserve_triggered_at_s,
+                "lifecycle_state": unit.lifecycle_state_at(self.time_s),
+            }
+            thresholds.append(unit.reserve_trigger_loss_ratio)
+            if unit.reserve_triggered:
+                activated_ids.add(unit.id)
+                triggered.append(item)
+                triggered_strength += strength
+                triggered_strength_by_side[unit.side.value] = triggered_strength_by_side.get(unit.side.value, 0.0) + strength
+            else:
+                pending.append(item)
+                pending_strength += strength
+                pending_strength_by_side[unit.side.value] = pending_strength_by_side.get(unit.side.value, 0.0) + strength
+        return {
+            "pending_units": len(pending),
+            "triggered_units": len(activated_ids | {str(item["id"]) for item in triggered}),
+            "triggered_surviving_units": len(triggered),
+            "pending_strength": pending_strength,
+            "triggered_strength": triggered_strength,
+            "pending_strength_by_side": pending_strength_by_side,
+            "triggered_strength_by_side": triggered_strength_by_side,
+            "pending": pending,
+            "triggered": triggered,
+            "threshold": min(thresholds) if thresholds else None,
+            "red_tank_loss_ratio": self._nonreserve_loss_ratio(Side.RED, UnitKind.TANK),
+        }
+
     def export_state(self, include_logs: bool = True) -> Dict[str, Any]:
         units = []
         for u in self.units.values():
@@ -1052,6 +1347,7 @@ class BattleField:
                     "side": u.side.value,
                     "kind": "command_post" if u.is_command else u.kind.value,
                     "type": u.unit_type,
+                    "echelon": u.echelon,
                     "x": u.position.x,
                     "y": u.position.y,
                     "strength": u.strength,
@@ -1068,9 +1364,30 @@ class BattleField:
                     "order": dict(u.current_order),
                     "elevation_m": cell.elevation_m if cell else None,
                     "damage_state": self._damage_state(u),
+                    "active_after_s": u.active_after_s,
+                    "present_after_s": u.present_after_s,
+                    "detectable_after_s": u.detectable_after_s,
+                    "targetable_after_s": u.targetable_after_s,
+                    "maneuver_after_s": u.maneuver_after_s,
+                    "engage_after_s": u.engage_after_s,
+                    "activation_phase": u.activation_phase,
+                    "activation_label": u.activation_label,
+                    "visible_before_activation": u.visible_before_activation,
+                    "reserve_trigger_side": u.reserve_trigger_side,
+                    "reserve_trigger_kind": u.reserve_trigger_kind,
+                    "reserve_trigger_loss_ratio": u.reserve_trigger_loss_ratio,
+                    "reserve_triggered": u.reserve_triggered,
+                    "reserve_triggered_at_s": u.reserve_triggered_at_s,
+                    "lifecycle_state": u.lifecycle_state_at(self.time_s),
+                    "present": u.is_present_at(self.time_s),
+                    "detectable": u.is_detectable_at(self.time_s),
+                    "targetable": u.can_be_damaged_at(self.time_s),
+                    "can_move": u.can_move_at(self.time_s),
+                    "can_engage": u.can_engage_at(self.time_s),
                 }
             )
 
+        shell_visual_window_s = self._shell_visual_window_s()
         shells = [
             {
                 "id": s.shell_id,
@@ -1079,14 +1396,19 @@ class BattleField:
                 "start": s.start_pos.as_tuple(),
                 "target": s.target_pos.as_tuple(),
                 "damage": s.damage,
+                "launch_time": s.launch_time,
                 "impact_time": s.impact_time,
                 "remaining": s.remaining_time(self.time_s),
                 "accuracy": s.accuracy,
                 "radius_m": s.radius_m,
                 "kind": s.kind,
+                "active": s.active,
+                "landed": s.landed,
+                "ballistic_travel_s": s.ballistic_travel_s,
+                "visual_recent": s.landed and self.time_s - s.impact_time <= shell_visual_window_s,
             }
             for s in self.shells.values()
-            if s.is_enroute
+            if s.is_enroute or (s.landed and self.time_s - s.impact_time <= shell_visual_window_s)
         ]
         fire_missions = [
             {
@@ -1105,12 +1427,62 @@ class BattleField:
                 "altitude_factor": float(mission.get("altitude_factor", 1.0)),
                 "range_factor": float(mission.get("range_factor", 1.0)),
                 "fire_event_bonus": float(mission.get("fire_event_bonus", 0.0)),
+                "detector_cell": mission.get("detector_cell"),
+                "target_cell": mission.get("target_cell"),
+                "detector_cell_center": mission.get("detector_cell_center"),
+                "target_cell_center": mission.get("target_cell_center"),
+                "grid_cell_size_m": float(mission.get("grid_cell_size_m", 0.0)),
+                "grid_distance_cells": float(mission.get("grid_distance_cells", 0.0)),
+                "grid_metric": str(mission.get("grid_metric", "chebyshev")),
                 "assigned_at": float(mission.get("assigned_at", 0.0)),
             }
             for artillery_id, mission in self.fire_missions.items()
         ]
+        pending_fire_orders = [
+            {
+                "arrival_time": order.arrival_time,
+                "artillery_id": order.artillery_id,
+                "target_id": order.target_id,
+                "target_name": order.target_name,
+                "target": order.target_pos.as_tuple(),
+                "detector_id": order.detector_id,
+                "detector_name": order.detector_name,
+                "hq_id": order.hq_id,
+                "hq_name": order.hq_name,
+                "confidence": order.confidence,
+                "reported_distance_m": order.reported_distance_m,
+                "line_of_sight": order.line_of_sight,
+                "terrain_factor": order.terrain_factor,
+                "altitude_factor": order.altitude_factor,
+                "range_factor": order.range_factor,
+                "fire_event_bonus": order.fire_event_bonus,
+                "detector_cell": list(order.detector_cell) if order.detector_cell is not None else None,
+                "target_cell": list(order.target_cell) if order.target_cell is not None else None,
+                "detector_cell_center": list(order.detector_cell_center) if order.detector_cell_center is not None else None,
+                "target_cell_center": list(order.target_cell_center) if order.target_cell_center is not None else None,
+                "grid_cell_size_m": order.grid_cell_size_m,
+                "grid_distance_cells": order.grid_distance_cells,
+                "grid_metric": order.grid_metric,
+                "assigned_from_detection_time": order.assigned_from_detection_time,
+            }
+            for order in self.pending_fire_orders
+        ]
 
         summary = self.snapshot()
+        terminal = self.terminal_status()
+        present_units = [u for u in self.units.values() if u.is_present_at(self.time_s)]
+        absent_units = [u for u in self.units.values() if u.is_alive() and not u.is_present_at(self.time_s)]
+        maneuvering_units = [u for u in self.units.values() if u.can_move_at(self.time_s)]
+        reserve_status = self.reserve_status_payload()
+        exchange = self.loss_exchange_payload()
+        timeline_frames = int(self.config.get("simulation", "timeline", "frames", default=0) or 0)
+        timeline_interval_s = float(
+            self.config.get("simulation", "timeline", "frame_interval_s", default=0.0) or 0.0
+        )
+        if timeline_frames <= 0:
+            timeline_frames = max(1, int(summary.expected_duration_s / 30.0))
+        if timeline_interval_s <= 0.0:
+            timeline_interval_s = max(summary.expected_duration_s / max(timeline_frames - 1, 1), 1.0)
         payload = {
             "time_s": self.time_s,
             "terrain": {
@@ -1121,6 +1493,7 @@ class BattleField:
             "units": units,
             "shells": shells,
             "fire_missions": fire_missions,
+            "pending_fire_orders": pending_fire_orders,
             "detection_grid_cell_size_m": float(
                 self.config.get("simulation", "detection", "grid_cell_size_m", default=250.0)
             ),
@@ -1128,17 +1501,33 @@ class BattleField:
                 {
                     "detector_id": det_id,
                     "target_id": tgt_id,
-                    "x": tgt.position.x,
-                    "y": tgt.position.y,
+                    "x": float(center[0]),
+                    "y": float(center[1]),
+                    "unit_x": tgt.position.x,
+                    "unit_y": tgt.position.y,
                     "detector_side": (det.side.value if det else None),
                     "confidence": rec.confidence,
+                    "distance_m": rec.distance_m,
+                    "line_of_sight": rec.line_of_sight,
+                    "range_factor": rec.range_factor,
+                    "detector_cell": list(rec.detector_cell) if rec.detector_cell is not None else None,
+                    "target_cell": list(rec.target_cell) if rec.target_cell is not None else None,
+                    "detector_cell_center": list(rec.detector_cell_center) if rec.detector_cell_center is not None else None,
+                    "target_cell_center": list(rec.target_cell_center) if rec.target_cell_center is not None else None,
+                    "grid_cell_size_m": rec.grid_cell_size_m,
+                    "grid_distance_cells": rec.grid_distance_cells,
+                    "grid_metric": rec.grid_metric,
                 }
                 for (det_id, tgt_id), rec in self.last_detections.items()
                 if (tgt := self.units.get(tgt_id)) is not None
                 for det in [self.units.get(det_id)]
+                for center in [rec.target_cell_center or tgt.position.as_tuple()]
             ],
             "summary": {
                 "active_units": summary.active_units,
+                "present_units": len(present_units),
+                "absent_units": len(absent_units),
+                "maneuvering_units": len(maneuvering_units),
                 "red_strength": summary.red_strength,
                 "blue_strength": summary.blue_strength,
                 "active_contacts": summary.active_contacts,
@@ -1147,10 +1536,23 @@ class BattleField:
                 "end_reason": summary.end_reason,
                 "red_tanks": summary.red_tanks,
                 "blue_tanks": summary.blue_tanks,
+                "red_initial_strength": float(terminal.get("red_initial_strength", 0.0)),
+                "red_force_end_threshold": float(terminal.get("red_force_end_threshold", 0.0)),
+                "blue_tank_end_count": int(terminal.get("blue_tank_end_count", 0)),
+                "unit_removal_ratio": float(self.runtime_parameters.get("unit_removal_ratio", 0.20)),
+                "tank_counts": self.tank_counts_by_side_and_type(),
+                "reserve_status": reserve_status,
+                "reserve_pending_units": reserve_status["pending_units"],
+                "reserve_triggered_units": reserve_status["triggered_units"],
+                "reserve_pending_strength": reserve_status["pending_strength"],
+                "reserve_triggered_strength": reserve_status["triggered_strength"],
+                "red_tank_loss_ratio": reserve_status["red_tank_loss_ratio"],
+                "exchange": exchange,
+                "loss_exchange_ratio": exchange["red_losses_per_blue_loss"],
                 "expected_duration_s": summary.expected_duration_s,
                 "progress_ratio": 1.0 if summary.ended else max(0.0, min(0.98, self.time_s / max(summary.expected_duration_s, 1.0))),
-                "current_frame": int(self.time_s / 30.0),
-                "total_frames": max(1, int(summary.expected_duration_s / 30.0)),
+                "current_frame": min(timeline_frames, int(self.time_s / timeline_interval_s) + 1),
+                "total_frames": timeline_frames,
             },
             "parameters": dict(self.runtime_parameters),
             "lanchester_matrix": self.runtime_lanchester_matrix,
@@ -1183,6 +1585,13 @@ class BattleField:
         self.time_s = float(state.get("time_s", self.time_s))
         if "fire_missions" in state:
             self.fire_missions.clear()
+        if "shells" in state:
+            self.shells.clear()
+        if "pending_fire_orders" in state:
+            self.pending_fire_orders.clear()
+        if "contacts" in state:
+            self.contacts.clear()
+            self.contact_history.clear()
         for item in state.get("units", []):
             unit = self.units.get(item.get("id"))
             if unit is None:
@@ -1196,12 +1605,76 @@ class BattleField:
             unit.detection_range_m = float(item.get("detection_range_m", unit.detection_range_m))
             unit.command_range_m = float(item.get("command_range_m", unit.command_range_m))
             unit.lanchester_range_m = float(item.get("lanchester_range_m", unit.lanchester_range_m))
+            for attr in (
+                "active_after_s",
+                "present_after_s",
+                "detectable_after_s",
+                "targetable_after_s",
+                "maneuver_after_s",
+                "engage_after_s",
+            ):
+                if attr in item:
+                    setattr(unit, attr, float(item[attr]))
+            if "reserve_trigger_side" in item:
+                unit.reserve_trigger_side = str(item["reserve_trigger_side"])
+            if "reserve_trigger_kind" in item:
+                unit.reserve_trigger_kind = str(item["reserve_trigger_kind"])
+            if "reserve_trigger_loss_ratio" in item:
+                value = item["reserve_trigger_loss_ratio"]
+                unit.reserve_trigger_loss_ratio = float(value) if value is not None else None
+            if "reserve_triggered" in item:
+                unit.reserve_triggered = bool(item["reserve_triggered"])
+            if "reserve_triggered_at_s" in item:
+                value = item["reserve_triggered_at_s"]
+                unit.reserve_triggered_at_s = float(value) if value is not None else None
+            if "activation_phase" in item:
+                unit.activation_phase = str(item["activation_phase"])
+            if "activation_label" in item:
+                unit.activation_label = str(item["activation_label"])
+            if "visible_before_activation" in item:
+                unit.visible_before_activation = bool(item["visible_before_activation"])
+            if "echelon" in item:
+                unit.echelon = str(item["echelon"])
+            elif "echelon_label" in item:
+                unit.echelon = str(item["echelon_label"])
             if "ammo_remaining" in item:
                 unit.ammo_remaining = item.get("ammo_remaining")
             if "waypoints" in item:
                 unit.movement_path.waypoints = [Point(float(p[0]), float(p[1])) for p in item["waypoints"] if len(p) >= 2]
             if "order" in item and isinstance(item["order"], dict):
                 unit.current_order = dict(item["order"])
+        for shell in state.get("shells", []):
+            if not isinstance(shell, dict):
+                continue
+            shell_id = str(shell.get("id") or shell.get("shell_id") or "")
+            launcher_id = str(shell.get("launcher_id", ""))
+            target_id = str(shell.get("target_id", ""))
+            start_pair = shell.get("start")
+            target_pair = shell.get("target")
+            if shell_id == "" or launcher_id not in self.units:
+                continue
+            if not (isinstance(start_pair, (list, tuple)) and len(start_pair) >= 2):
+                start_pair = self.units[launcher_id].position.as_tuple()
+            if not (isinstance(target_pair, (list, tuple)) and len(target_pair) >= 2):
+                target_pair = self.units[target_id].position.as_tuple() if target_id in self.units else start_pair
+            impact_time = float(shell.get("impact_time", self.time_s + float(shell.get("remaining", 0.0))))
+            launch_time = float(shell.get("launch_time", self.time_s))
+            self.shells[shell_id] = ShellImpact(
+                shell_id=shell_id,
+                launcher_id=launcher_id,
+                target_id=target_id,
+                start_pos=Point(float(start_pair[0]), float(start_pair[1])),
+                target_pos=Point(float(target_pair[0]), float(target_pair[1])),
+                damage=float(shell.get("damage", 0.0)),
+                launch_time=launch_time,
+                impact_time=impact_time,
+                accuracy=float(shell.get("accuracy", 1.0)),
+                radius_m=float(shell.get("radius_m", 0.0)),
+                kind=str(shell.get("kind", "artillery")),
+                ballistic_travel_s=float(shell.get("ballistic_travel_s", 0.0)),
+                active=True,
+                landed=bool(shell.get("landed", False)),
+            )
         for mission in state.get("fire_missions", []):
             if not isinstance(mission, dict):
                 continue
@@ -1228,6 +1701,90 @@ class BattleField:
                 "altitude_factor": float(mission.get("altitude_factor", 1.0)),
                 "range_factor": float(mission.get("range_factor", 1.0)),
                 "fire_event_bonus": float(mission.get("fire_event_bonus", 0.0)),
+                "detector_cell": mission.get("detector_cell"),
+                "target_cell": mission.get("target_cell"),
+                "detector_cell_center": mission.get("detector_cell_center"),
+                "target_cell_center": mission.get("target_cell_center"),
+                "grid_cell_size_m": float(mission.get("grid_cell_size_m", 0.0)),
+                "grid_distance_cells": float(mission.get("grid_distance_cells", 0.0)),
+                "grid_metric": str(mission.get("grid_metric", "chebyshev")),
                 "assigned_at": float(mission.get("assigned_at", self.time_s)),
             }
+        for order in state.get("pending_fire_orders", []):
+            if not isinstance(order, dict):
+                continue
+            artillery_id = str(order.get("artillery_id", ""))
+            target_id = str(order.get("target_id", ""))
+            if artillery_id not in self.units or target_id not in self.units:
+                continue
+            target_pair = order.get("target")
+            target_pos = self.units[target_id].position
+            if isinstance(target_pair, (list, tuple)) and len(target_pair) >= 2:
+                target_pos = Point(float(target_pair[0]), float(target_pair[1]))
+            self.pending_fire_orders.append(
+                PendingFireOrder(
+                    arrival_time=float(order.get("arrival_time", self.time_s)),
+                    artillery_id=artillery_id,
+                    target_id=target_id,
+                    target_name=str(order.get("target_name", self.units[target_id].name)),
+                    target_pos=target_pos,
+                    detector_id=str(order.get("detector_id", "")),
+                    detector_name=str(order.get("detector_name", "")),
+                    hq_id=order.get("hq_id"),
+                    hq_name=order.get("hq_name"),
+                    confidence=float(order.get("confidence", 0.35)),
+                    reported_distance_m=float(order.get("reported_distance_m", 0.0)),
+                    line_of_sight=bool(order.get("line_of_sight", True)),
+                    terrain_factor=float(order.get("terrain_factor", 1.0)),
+                    altitude_factor=float(order.get("altitude_factor", 1.0)),
+                    range_factor=float(order.get("range_factor", 1.0)),
+                    fire_event_bonus=float(order.get("fire_event_bonus", 0.0)),
+                    assigned_from_detection_time=float(order.get("assigned_from_detection_time", self.time_s)),
+                    detector_cell=self._tuple_int_pair(order.get("detector_cell")),
+                    target_cell=self._tuple_int_pair(order.get("target_cell")),
+                    detector_cell_center=self._tuple_float_pair(order.get("detector_cell_center")),
+                    target_cell_center=self._tuple_float_pair(order.get("target_cell_center")),
+                    grid_cell_size_m=float(order.get("grid_cell_size_m", 0.0)),
+                    grid_distance_cells=float(order.get("grid_distance_cells", 0.0)),
+                    grid_metric=str(order.get("grid_metric", "chebyshev")),
+                )
+            )
+        for contact in state.get("contacts", []):
+            if not isinstance(contact, dict):
+                continue
+            attacker = contact.get("attacker", {})
+            defender = contact.get("defender", {})
+            if not isinstance(attacker, dict) or not isinstance(defender, dict):
+                continue
+            attacker_id = str(attacker.get("id", ""))
+            defender_id = str(defender.get("id", ""))
+            if attacker_id not in self.units or defender_id not in self.units:
+                continue
+            key = tuple(sorted((attacker_id, defender_id)))
+            last_deltas = contact.get("last_deltas", {})
+            last_k = contact.get("last_k", {})
+            terrain = contact.get("terrain_factors", {})
+            self.contacts[key] = EngagementPair(
+                attacker_id=attacker_id,
+                defender_id=defender_id,
+                started_at=float(contact.get("started_at", self.time_s)),
+                last_deltas=(
+                    float(last_deltas.get("attacker_loss", 0.0)) if isinstance(last_deltas, dict) else 0.0,
+                    float(last_deltas.get("defender_loss", 0.0)) if isinstance(last_deltas, dict) else 0.0,
+                ),
+                last_k=(
+                    float(last_k.get("attacker_to_defender", 0.0)) if isinstance(last_k, dict) else 0.0,
+                    float(last_k.get("defender_to_attacker", 0.0)) if isinstance(last_k, dict) else 0.0,
+                ),
+                last_range_m=float(contact.get("range_m", 0.0)),
+                terrain_factors=(
+                    float(terrain.get("attacker", 1.0)) if isinstance(terrain, dict) else 1.0,
+                    float(terrain.get("defender", 1.0)) if isinstance(terrain, dict) else 1.0,
+                ),
+            )
+            self.contact_history[key] = [
+                (float(h.get("time_s", self.time_s)), float(h.get("a_strength", 0.0)), float(h.get("b_strength", 0.0)))
+                for h in contact.get("history", [])
+                if isinstance(h, dict)
+            ][-360:]
         self.log_event("load", "Runtime state loaded from file")

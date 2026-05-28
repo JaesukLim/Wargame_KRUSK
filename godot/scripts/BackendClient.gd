@@ -13,12 +13,20 @@ signal backend_error(message: String)
 
 @export var http_base_url: String = "http://127.0.0.1:8765"
 @export var websocket_url: String = "ws://127.0.0.1:8765/ws/state"
+@export var packaged_backend_name: String = "WargameKRUSKBackend.exe"
+@export var packaged_backend_unix_name: String = "WargameKRUSKBackend"
 
 var _socket := WebSocketPeer.new()
 var _socket_connected := false
+var _packaged_backend_pid := -1
 
 func _ready() -> void:
+    _start_packaged_backend_if_available()
     set_process(true)
+
+func _notification(what: int) -> void:
+    if what == NOTIFICATION_PREDELETE or what == NOTIFICATION_WM_CLOSE_REQUEST:
+        _stop_packaged_backend()
 
 func connect_websocket() -> void:
     var err := _socket.connect_to_url(websocket_url)
@@ -30,6 +38,41 @@ func connect_websocket() -> void:
 func close_websocket() -> void:
     _socket.close()
     _socket_connected = false
+
+func _start_packaged_backend_if_available() -> void:
+    if OS.has_feature("editor"):
+        return
+    if not http_base_url.begins_with("http://127.0.0.1:8765") and not http_base_url.begins_with("http://localhost:8765"):
+        return
+    var exe_dir := OS.get_executable_path().get_base_dir()
+    var backend_names := PackedStringArray([packaged_backend_name, packaged_backend_unix_name])
+    var candidates := PackedStringArray()
+    for backend_name in backend_names:
+        candidates.append(exe_dir.path_join(backend_name))
+        candidates.append(exe_dir.path_join("backend").path_join(backend_name))
+    for backend_path in candidates:
+        if not FileAccess.file_exists(backend_path):
+            continue
+        var log_dir := backend_path.get_base_dir().path_join("logs")
+        DirAccess.make_dir_recursive_absolute(log_dir)
+        var args := PackedStringArray(["--mode", "serve", "--host", "127.0.0.1", "--port", "8765", "--log-dir", log_dir])
+        print("Starting packaged backend: ", backend_path)
+        var pid := OS.create_process(backend_path, args, false)
+        if pid > 0:
+            _packaged_backend_pid = pid
+            print("Packaged backend process started: ", pid)
+        else:
+            backend_error.emit("Packaged backend start failed: %s" % backend_path)
+            push_error("Packaged backend start failed: %s" % backend_path)
+        return
+    backend_error.emit("Packaged backend executable not found next to WargameKRUSK.exe")
+    push_warning("Packaged backend executable not found next to WargameKRUSK.exe")
+
+func _stop_packaged_backend() -> void:
+    if _packaged_backend_pid <= 0:
+        return
+    OS.kill(_packaged_backend_pid)
+    _packaged_backend_pid = -1
 
 func request_state() -> void:
     _request("GET", "/state", {}, "state")
@@ -45,6 +88,12 @@ func request_lanchester_matrix() -> void:
 
 func request_replay() -> void:
     _request("GET", "/state/replay", {}, "replay")
+
+func generate_replay(dt: float = 30.0, max_steps: int = 120, sample_every_steps: int = 1) -> void:
+    _request("POST", "/state/replay/generate", {"dt": dt, "max_steps": max_steps, "sample_every_steps": sample_every_steps}, "replay")
+
+func generate_replay_timeline(frame_interval_s: float = 3600.0, frames: int = 120, integration_dt_s: float = 300.0) -> void:
+    _request("POST", "/state/replay/generate", {"frame_interval_s": frame_interval_s, "frames": frames, "integration_dt_s": integration_dt_s, "stop_on_terminal": true}, "replay")
 
 func request_terrain() -> void:
     _request("GET", "/terrain", {}, "terrain")
